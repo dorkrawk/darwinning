@@ -1,4 +1,14 @@
 module Darwinning
+
+	class Population
+		att_accessor :members, :mutation_rate, :generations_limit, :fitness_goal
+
+		def initialize(organism, population_size, fitness_goal, mutation_rate = 0.0, generations_limit = 0)
+
+		end
+	end
+
+	# maybe this doesn't need to exist
 	class Evolution
 		population = []
 		mutation_rate = 0.0
@@ -44,7 +54,7 @@ module Darwinning
 
 	class Organism
 		# parent class for user organisms
-		@genes = []  # class variables
+		genes = []  # class variables
 		genotypes = [Gene,Gene] # instance variables
 
 		def fitness
@@ -54,11 +64,18 @@ module Darwinning
 
 	class Gene
 		# builds organisms
-		name = ""
-		value = nil
-		min = nil
-		max = nil
-		invalid_values = []
+
+		# TODO: maybe make gene types based on primitive types, include 'whitelist' and 'blacklist' rather than just invalid_values
+
+		att_accessor :name, :value, :min_value, :max_value, :invalid_values
+
+		def initialize(name = "", value = nil, min_value = nil, max_value = nil, invalid_values = [])
+			@name = name
+			@value = value
+			@min_value = min_value
+			@max_value = max_value
+			@invalid_values = invalid_values
+		end
 	end
 
 
