@@ -3,20 +3,20 @@ module Darwinning
 	class Population
 		att_accessor :members, :mutation_rate, :generations_limit, :fitness_goal
 
-		def initialize(organism, population_size, fitness_goal, mutation_rate = 0.0, generations_limit = 0)
-
-		end
-	end
-
-	# maybe this doesn't need to exist
-	class Evolution
-		population = []
+		members = []
 		mutation_rate = 0.0
 		generations_limit = 0
 		fitness_goal = 0
+		organism = ""
+
+		def initialize(organism, population_size, fitness_goal, mutation_rate = 0.0, generations_limit = 0)
+			build_population
+		end
 
 		def build_population
-
+			population_size.times do |i|
+				members << organism.new 
+			end
 		end
 
 		def crossover
@@ -47,18 +47,24 @@ module Darwinning
 
 		end
 
-		def get_current_best
+		def get_best
 
 		end
 	end
 
 	class Organism
 		# parent class for user organisms
-		genes = []  # class variables
+		@genes = []  # class variables
 		genotypes = [Gene,Gene] # instance variables
 
+		def initialize
+			@genes.each do |g|
+				genotypes << g.new
+			end
+		end
+
 		def fitness
-			0
+			-1
 		end
 	end
 
