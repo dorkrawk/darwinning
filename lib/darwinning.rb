@@ -1,3 +1,5 @@
+require 'darwinning/gene'
+
 module Darwinning
 
 	class Population
@@ -51,38 +53,5 @@ module Darwinning
 
 		end
 	end
-
-	class Organism
-		# parent class for user organisms
-		@genes = []  # class variables
-		genotypes = [Gene,Gene] # instance variables
-
-		def initialize
-			@genes.each do |g|
-				genotypes << g.new
-			end
-		end
-
-		def fitness
-			-1
-		end
-	end
-
-	class Gene
-		# builds organisms
-
-		# TODO: maybe make gene types based on primitive types, include 'whitelist' and 'blacklist' rather than just invalid_values
-
-		att_accessor :name, :value, :min_value, :max_value, :invalid_values
-
-		def initialize(name = "", value = nil, min_value = nil, max_value = nil, invalid_values = [])
-			@name = name
-			@value = value
-			@min_value = min_value
-			@max_value = max_value
-			@invalid_values = invalid_values
-		end
-	end
-
 
 end
