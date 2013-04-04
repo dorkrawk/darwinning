@@ -1,4 +1,4 @@
-
+module Darwinning
 	class Gene
 		# builds organisms
 
@@ -19,3 +19,4 @@
 			@value = ((@min_value..@max_value).to_a - invalid_values).sample
 		end
 	end
+end

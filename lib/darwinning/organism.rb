@@ -25,20 +25,23 @@ module ClassLevelInheritableAttributes
   end
 end
 
-class Organism
+module Darwinning
+	class Organism
 
-	include ClassLevelInheritableAttributes
-	inheritable_attributes :genes
-	attr_accessor :genotypes
+		include ClassLevelInheritableAttributes
+		inheritable_attributes :genes, :name
+		attr_accessor :genotypes
 
-	@genes = []  # Gene instances
+		@genes = []  # Gene instances
+		@name = ""
 
-	def initialize
-		# fill genotypes with expressed Genes
-		@genotypes = self.class.genes.map { |g| g.express } # Gene expressions
-	end
+		def initialize
+			# fill genotypes with expressed Genes
+			@genotypes = self.class.genes.map { |g| g.express } # Gene expressions
+		end
 
-	def fitness
-		-1
+		def fitness
+			-1
+		end
 	end
 end
