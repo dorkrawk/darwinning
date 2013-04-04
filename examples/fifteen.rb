@@ -34,6 +34,9 @@ puts "***************************"
 # and a generation limit of 100
 p = Darwinning::Population.new(Triple, 20, 0, 0.1, 100)
 puts p.members.map { |m| m.fitness }
+puts ""
+puts p.best_member.genotypes
+p.crossover
 
 # should return the organism that met the fitness value or an error
 #population.evolve 
