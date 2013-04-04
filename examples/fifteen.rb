@@ -2,9 +2,9 @@ require '../lib/darwinning'
 
 class Triple < Darwinning::Organism
 	@genes = []
-	@genes << Darwinning::Gene.new("first digit", 0, 9, [])
-	@genes << Darwinning::Gene.new("second digit", 0, 9, [])
-	@genes << Darwinning::Gene.new("third digit", 0, 9, [])
+	@genes << Darwinning::Gene.new("first digit", (0..9))
+	@genes << Darwinning::Gene.new("second digit", (0..9))
+	@genes << Darwinning::Gene.new("third digit", (0..9))
 
 	@name = "Triple"
 
@@ -15,7 +15,7 @@ class Triple < Darwinning::Organism
 end 
 
 
-g = Darwinning::Gene.new("first digit", 0, 9, [])
+g = Darwinning::Gene.new("first digit", (0..9))
 
 #puts g.name
 #puts g.express
