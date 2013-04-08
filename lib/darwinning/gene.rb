@@ -1,9 +1,5 @@
 module Darwinning
 	class Gene
-		# builds organisms
-
-		# TODO: maybe make gene types based on primitive types, include 'whitelist' and 'blacklist' rather than just invalid_values
-
 		attr_accessor :name, :value, :min_value, :max_value, :invalid_values
 
 		def initialize(name = "", min_value = nil, max_value = nil, invalid_values = [])

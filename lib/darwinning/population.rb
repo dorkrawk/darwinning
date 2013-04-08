@@ -24,14 +24,25 @@ module Darwinning
 
 		end
 
-		def crossover
-			m1 = weighted_select(@members)
-			m2 = weighted_select(@members - [m1])
-			
+		def crossover(m1, m2)
+			genotypes1 = []
+			genotypes2 = []
+
+			m1.genotypes.zip(m2.genotypes).each do |g|
+				if m1.genotypes.index(g[0]) % 2 == 0
+					genotypes1 << g[0]
+					genotypes2 << g[1]
+				else 
+					genotypes1 << g[1]
+					genotypes2 << g[0]
+				end
+			end
+
+			[@organism.new(genotypes1), @organism.new(genotypes2)]
 		end
 
-		def sexytimes
-			crossover
+		def sexytimes(m1, m2)
+			crossover(m1, m2)
 		end
 
 		def weighted_select(members)
@@ -51,17 +62,28 @@ module Darwinning
 				pick_sum += selected_member[1]
 			end
 
-			selected_member
+			selected_member[0]
 		end
 
 		def mutate
 
 		end
 
-		def make_next_generation
-			crossover
-			mutate
-			is_over?
+		def make_next_generation!			
+			temp_members = @members
+			used_members = []
+			new_members = []
+
+			until new_members.length == @members.length/2
+				m1 = weighted_select(@members - used_members)
+				used_members << m1
+				m2 = weighted_select(@members - used_members)
+				used_members << m2
+
+				new_members << crossover(m1,m2)
+			end
+
+			@members = new_members.flatten
 		end
 
 		def evolution_over?

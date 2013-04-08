@@ -35,9 +35,16 @@ module Darwinning
 		@genes = []  # Gene instances
 		@name = ""
 
-		def initialize
-			# fill genotypes with expressed Genes
-			@genotypes = self.class.genes.map { |g| g.express } # Gene expressions
+		def initialize(genotypes = [])
+			#TODO: catch errors if genotype.length != @genotypes.lenght
+			# catch if genotype[x] is not a valid value for @gene[x]
+
+			if genotypes == []
+				# fill genotypes with expressed Genes
+				@genotypes = self.class.genes.map { |g| g.express } # Gene expressions
+			else
+				@genotypes = genotypes
+			end
 		end
 
 		def fitness

@@ -5,5 +5,4 @@ require_relative './darwinning/config'
 
 module Darwinning
 	extend Config
-
 end
