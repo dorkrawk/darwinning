@@ -1,11 +1,12 @@
 require '../lib/darwinning'
 
 class Triple < Darwinning::Organism
+
 	@name = "Triple"
 	@genes = [
-			Darwinning::Gene.new("first digit", 0, 9, []),
-			Darwinning::Gene.new("second digit", 0, 9, []),
-			Darwinning::Gene.new("third digit", 0, 9, [])
+			Darwinning::Gene.new("first digit", (0..9)),
+			Darwinning::Gene.new("second digit", (0..9)),
+			Darwinning::Gene.new("third digit", (0..9))
 		]
 
 	def fitness
