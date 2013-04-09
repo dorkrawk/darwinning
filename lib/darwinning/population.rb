@@ -65,8 +65,9 @@ module Darwinning
 			selected_member[0]
 		end
 
-		def mutate
+		def mutate(member)
 
+			#EDIT: move mutate into Organism class
 		end
 
 		def make_next_generation!			
@@ -83,7 +84,9 @@ module Darwinning
 				new_members << crossover(m1,m2)
 			end
 
-			@members = new_members.flatten
+			new_members.flatten!
+
+			@members = new_members
 		end
 
 		def evolution_over?

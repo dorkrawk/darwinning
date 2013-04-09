@@ -47,6 +47,10 @@ module Darwinning
 			end
 		end
 
+		def mutate
+			
+		end
+
 		def fitness
 			-1
 		end
