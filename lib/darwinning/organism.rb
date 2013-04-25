@@ -30,13 +30,13 @@ module Darwinning
 
 		include ClassLevelInheritableAttributes
 		inheritable_attributes :genes, :name
-		attr_accessor :genotypes
+		attr_accessor :genotypes, :fitness
 
 		@genes = []  # Gene instances
 		@name = ""
 
 		def initialize(genotypes = [])
-			#TODO: catch errors if genotype.length != @genotypes.lenght
+			#TODO: catch errors if genotype.length != @genotypes.length
 			# catch if genotype[x] is not a valid value for @gene[x]
 
 			if genotypes == []
@@ -47,8 +47,11 @@ module Darwinning
 			end
 		end
 
-		def mutate
-			
+		# Selects a random genotype from the organism and rexpresses its gene
+		def mutate!
+			random_index = (0..@genotypes.length-1).to_a.sample 
+			@genotypes[random_index] = self.class.genes[random_index].express
+			self
 		end
 
 		def fitness

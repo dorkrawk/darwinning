@@ -3,11 +3,12 @@ module Darwinning
 	class Population
 		attr_accessor :members, :mutation_rate, :generations_limit, :fitness_goal, :organism, :generation
 
-		def initialize(organism, population_size, fitness_goal, mutation_rate = 0.0, generations_limit = 0)
+		def initialize(organism, population_size, fitness_goal, mutation_rate = 0.0, generations_limit = 0, manual_fitness = false)
 			@organism = organism
 			@fitness_goal = fitness_goal
 			@mutation_rate = mutation_rate
 			@generations_limit = generations_limit
+			@manual_fitness = manual_fitness
 			@members = []
 			@generation = 0 # initial population is generation 0
 			
@@ -65,9 +66,14 @@ module Darwinning
 			selected_member[0]
 		end
 
-		def mutate(member)
-
-			#EDIT: move mutate into Organism class
+		def mutate
+			@members.map! { |m|
+				if (0..100).to_a.sample < @mutation_rate*100
+					m.mutate!
+				else
+					m
+				end
+			}
 		end
 
 		def make_next_generation!			
@@ -87,6 +93,8 @@ module Darwinning
 			new_members.flatten!
 
 			@members = new_members
+
+			mutate
 		end
 
 		def evolution_over?

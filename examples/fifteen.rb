@@ -19,7 +19,7 @@ end
 # with a goal of getting a fitness value of 0,
 # a mutation rate of 0.1
 # and a generation limit of 100
-p = Darwinning::Population.new(Triple, 10, 0, 0.1, 100)
+p = Darwinning::Population.new(Triple, 10, 0, 0.5, 100)
 #puts p.members.map { |m| m.fitness }
 puts "members"
 puts p.members
@@ -35,6 +35,7 @@ puts "m2: #{p.members[1].genotypes}"
 new_ms = p.sexytimes(p.members[0], p.members[1])
 puts "new_m1: #{new_ms[0].genotypes}"
 puts "new_m2: #{new_ms[1].genotypes}"
+puts "mutated_new_m2: #{new_ms[1].mutate!.genotypes}"
 
 
 # should return the organism that met the fitness value or an error
