@@ -66,7 +66,7 @@ module Darwinning
 			selected_member[0]
 		end
 
-		def mutate
+		def mutate!
 			@members.map! { |m|
 				if (0..100).to_a.sample < @mutation_rate*100
 					m.mutate!
@@ -94,7 +94,7 @@ module Darwinning
 
 			@members = new_members
 
-			mutate
+			mutate!
 		end
 
 		def evolution_over?
