@@ -16,9 +16,9 @@ class Triple < Darwinning::Organism
 end 
 
 # create a population of 10 Triples
-# with a goal of getting a fitness value of 0,
+# with a goal of getting a fitness value of 0 (or the closeset after 100 generations),
 # a mutation rate of 0.1
-# and a generation limit of 100
+# fitness will be calculated by the fitness function provided in the Triple class definition
 p = Darwinning::Population.new(Triple, 10, 0, 0.5, 100)
 #puts p.members.map { |m| m.fitness }
 puts "members"
@@ -36,6 +36,15 @@ new_ms = p.sexytimes(p.members[0], p.members[1])
 puts "new_m1: #{new_ms[0].genotypes}"
 puts "new_m2: #{new_ms[1].genotypes}"
 puts "mutated_new_m2: #{new_ms[1].mutate!.genotypes}"
+
+
+p2 = Darwinning::Population.new(Triple, 10, 0, 0.5, 100)
+
+p2.evolve
+
+puts p2.best_member
+puts p2.best_member.genotypes
+puts "in #{p2.generation} generations"
 
 
 # should return the organism that met the fitness value or an error

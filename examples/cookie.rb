@@ -19,4 +19,8 @@ class Cookie < Darwinning::Organism
 
 end
 
-p = Darwinning::Population.new(Cookie, 10, 0, 0.1, 100, true)
+# Create a population of 10 Cookies (cookie recipies to be more accurate)
+# with a goal of getting a cookie with a rating of 5 (or the highest rating after 100 generations)
+# with a mutation rate of 0.1
+# and taking member fitness as a manually entered value
+p = Darwinning::Population.new(Cookie, 10, 5, 0.1, 100, true)

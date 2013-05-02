@@ -22,7 +22,9 @@ module Darwinning
 		end
 
 		def evolve
-
+			until evolution_over?
+				make_next_generation!
+			end
 		end
 
 		def crossover(m1, m2)
@@ -76,6 +78,10 @@ module Darwinning
 			}
 		end
 
+		def input_members_fitness!(fitness_values)
+			@members.each { |m| m.fiteness = fiteness_values[m.index] }
+		end
+
 		def make_next_generation!			
 			temp_members = @members
 			used_members = []
@@ -95,15 +101,12 @@ module Darwinning
 			@members = new_members
 
 			mutate!
+			@generation += 1
 		end
 
 		def evolution_over?
 			# check if the fiteness goal or generation limit has been met
 			@generation == @generations_limit or best_member.fitness == @fitness_goal
-		end
-
-		def get_population
-
 		end
 
 		def best_member
