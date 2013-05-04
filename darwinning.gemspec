@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
 	s.name = 'Darwinning'
-	s.version = '0.0.0'
+	s.version = '0.0.1'
 
 	s.authors = ['Dave Schwantes']
-	s.summary = 'A Ruby gem for genetic algorithms'
+	s.summary = 'A Ruby gem to aid in the use of genetic algorithms.'
 	s.homepage = 'https://github.com/dorkrawk/darwinning'
 
 
