@@ -19,55 +19,30 @@ end
 # with a goal of getting a fitness value of 0 (or the closeset after 100 generations),
 # a mutation rate of 0.1
 # fitness will be calculated by the fitness function provided in the Triple class definition
-p = Darwinning::Population.new(Triple, 10, 0, 0.5, 100)
-#puts p.members.map { |m| m.fitness }
-puts "members"
-puts p.members
-puts ""
-#puts p.best_member.genotypes
-puts "members in next generation"
-p.make_next_generation!
-puts p.members
+p1 = Darwinning::Population.new(Triple, 10, 0, 0.1, 100)
 
-puts "m1: #{p.members[0].genotypes}"
-puts "m2: #{p.members[1].genotypes}"
+puts "First Generation of Population"
+p1.members.each { |m| m.nice_print }  # print the initial population members
 
-new_ms = p.sexytimes(p.members[0], p.members[1])
-puts "new_m1: #{new_ms[0].genotypes}"
-puts "new_m2: #{new_ms[1].genotypes}"
-puts "mutated_new_m2: #{new_ms[1].mutate!.genotypes}"
+p1.evolve # create new generations until fitness goal is met or generation limit is met
 
+puts "Solution:"
+p1.best_member.nice_print # print the member representing the solution
 
-p2 = Darwinning::Population.new(Triple, 10, 0, 0.5, 100)
+puts "Solution met after #{p1.generation} generations."
 
-p2.evolve
+# create a new population of Triples
+p2 = Darwinning::Population.new(Triple, 10, 0, 0.1, 100)
 
-puts p2.best_member
-puts p2.best_member.genotypes
-puts "in #{p2.generation} generations"
+puts "Second Generation of p2:"
+p2.make_next_generation! # manually create 2nd generation of popuation
+p2.members.each { |m| m.nice_print }
 
+puts "Newly Created Members from p2:"
+# mannually "breed" 2 population members
+new_members = p2.sexytimes(p2.members[0], p2.members[1]) # sexytimes is an alias for crossover, because it's funny
+new_members.each { |m| m.nice_print }
 
-# should return the organism that met the fitness value or an error
-#population.evolve 
-
-#population2 = new Population(Triple, 20, 0, 0.1, 100)
-
-# show first generation of population
-#puts population2.members
-
-#population2.make_next_generation
-
-# show second generation of population
-#puts population2.members
-#puts population2.get_current_best
-
-
-
-
-# class BinaryString < Darwinning::Organism
-# 		def initialize(name, length)
-# 			@name = name
-# 			@genes = Array.new(length) { Darwinning::Gene.new("bit",0,1) }
-# 			super
-# 		end
-# 	end
+puts "Mutated Member from p2"
+# mannually mutate one of the newly created organisms
+new_members[0].mutate!.nice_print

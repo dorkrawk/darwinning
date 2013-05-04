@@ -54,5 +54,11 @@ module Darwinning
 			@genotypes[random_index] = self.class.genes[random_index].express
 			self
 		end
+
+		def nice_print
+			puts self.class.name == "" ? "[no name]" : self.class.name
+			self.class.genes.each { |g| puts "  #{g.name}: #{g.value} #{g.units}" }
+			puts "    fitness: #{fitness}"
+		end
 	end
 end
