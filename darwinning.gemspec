@@ -11,4 +11,6 @@ Gem::Specification.new do |s|
 
 	s.files = Dir["{lib}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
 	s.require_paths = ["lib"]
+
+	s.test_files  = Dir.glob("test/**/*.rb")
 end

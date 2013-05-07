@@ -78,8 +78,8 @@ module Darwinning
 			}
 		end
 
-		def input_members_fitness!(fitness_values)
-			@members.each { |m| m.fiteness = fiteness_values[m.index] }
+		def set_members_fitness!(fitness_values)
+			@members.to_enum.each_with_index { |m, i| m.fitness = fitness_values[i] }
 		end
 
 		def make_next_generation!			
