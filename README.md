@@ -71,5 +71,20 @@ p.make_next_generation!
 p.members.each { |m| m.nice_print } # print second generation of cookie recipies
 ```
 
+### Binary String Organism
+
+A simple binary string representation of an organism can be easily created thusly:
+
+```ruby
+class BinaryOrganism < Darwinning::Organism
+
+	10.times { |s| @genes << Darwinning::Gene.new("", [0,1]) }
+
+	def fitness
+		# whatever makes sense here
+	end  
+end
+```
+
 ## Built by:
 * [Dave Schwantes](https://github.com/dorkrawk "dorkrawk")

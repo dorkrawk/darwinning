@@ -30,7 +30,7 @@ module Darwinning
 
 		include ClassLevelInheritableAttributes
 		inheritable_attributes :genes, :name
-		attr_accessor :genotypes, :fitness
+		attr_accessor :genotypes, :fitness, :name, :genes
 
 		@genes = []  # Gene instances
 		@name = ""
@@ -59,6 +59,6 @@ module Darwinning
 			puts self.class.name == "" ? "[no name]" : self.class.name
 			self.class.genes.to_enum.each_with_index { |g, i| puts "  #{g.name}: #{@genotypes[i]} #{g.units}" }
 			puts "    fitness: #{fitness}"
-		end
+		end⁄
 	end
 end
