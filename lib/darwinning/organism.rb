@@ -57,7 +57,7 @@ module Darwinning
 
 		def nice_print
 			puts self.class.name == "" ? "[no name]" : self.class.name
-			self.class.genes.each { |g| puts "  #{g.name}: #{g.value} #{g.units}" }
+			self.class.genes.to_enum.each_with_index { |g, i| puts "  #{g.name}: #{@genotypes[i]} #{g.units}" }
 			puts "    fitness: #{fitness}"
 		end
 	end
