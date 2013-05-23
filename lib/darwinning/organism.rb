@@ -59,6 +59,14 @@ module Darwinning
 			puts self.class.name == "" ? "[no name]" : self.class.name
 			self.class.genes.to_enum.each_with_index { |g, i| puts "  #{g.name}: #{@genotypes[i]} #{g.units}" }
 			puts "    fitness: #{fitness}"
-		end⁄
+		end
+
+		def name
+			self.class.name
+		end
+
+		def genes
+			self.class.genes
+		end
 	end
 end

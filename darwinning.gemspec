@@ -1,3 +1,5 @@
+require "./lib/darwinning/version"
+
 Gem::Specification.new do |s|
 	s.name = 'darwinning'
 	s.version = Darwinning::VERSION

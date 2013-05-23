@@ -29,7 +29,7 @@ describe Darwinning::Gene do
 		end
 
 		it "expressed value should not be invalid value" do
-			@day_hour.include?(@digit.express).should == false # uncertain test
+			@day_hour.invalid_values.include?(@digit.express).should == false # uncertain test
 		end
 	end
 
