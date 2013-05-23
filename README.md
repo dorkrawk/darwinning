@@ -1,6 +1,17 @@
 Darwinning
 ==========
+[![Gem Version](https://badge.fury.io/rb/darwinning.png)](http://badge.fury.io/rb/darwinning)
+
+[gem]: https://rubygems.org/gems/darwinning
+
 A Ruby gem to aid in the use of genetic algorithms.
+
+Installation
+--------
+
+```
+gem install darwinning
+```
 
 Examples
 --------
