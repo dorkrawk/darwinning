@@ -4,5 +4,5 @@ require_relative 'darwinning/population'
 require_relative 'darwinning/config'
 
 module Darwinning
-	extend Config
+  extend Config
 end
