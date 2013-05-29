@@ -24,7 +24,7 @@ p1 = Darwinning::Population.new(Triple, 10, 0, 0.1, 100)
 puts "First Generation of Population"
 p1.members.each { |m| m.nice_print }  # print the initial population members
 
-p1.evolve # create new generations until fitness goal is met or generation limit is met
+p1.evolve! # create new generations until fitness goal is met or generation limit is met
 
 puts "Solution:"
 p1.best_member.nice_print # print the member representing the solution

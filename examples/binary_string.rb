@@ -15,7 +15,7 @@ p = Darwinning::Population.new(BinaryOrganism, 20, 0, 0.1, 100)
 puts "First Generation of Population!"
 p.members.each { |m| m.nice_print }
 
-p.evolve
+p.evolve!
 
 puts "Solution:"
 p.best_member.nice_print # print the member representing the solution

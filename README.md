@@ -39,7 +39,7 @@ class Triple < Darwinning::Organism
 end 
 
 p = Darwinning::Population.new(Triple, 10, 0, 0.1, 100)
-p.evolve
+p.evolve!
 
 p.best_member.nice_print # prints the member representing the solution
 ```

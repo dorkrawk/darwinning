@@ -21,7 +21,7 @@ module Darwinning
       end
     end
 
-    def evolve
+    def evolve!
       until evolution_over?
         make_next_generation!
       end

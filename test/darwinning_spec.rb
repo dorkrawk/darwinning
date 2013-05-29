@@ -21,18 +21,6 @@ describe Darwinning::Gene do
   it "units should be set" do
     @day_hour.units.should == "o'clock"
   end
-
-  describe "#express" do
-
-    it "expressed value should be within range" do
-      (0..9).to_a.include?(@digit.express).should == true  # uncertain test
-    end
-
-    it "expressed value should not be invalid value" do
-      @day_hour.invalid_values.include?(@digit.express).should == false # uncertain test
-    end
-  end
-
 end
 
 describe Darwinning::Organism do
