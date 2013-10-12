@@ -1,4 +1,5 @@
 require 'darwinning'
+require './test/classes/triple'
 
 describe Darwinning::Gene do
   before do
@@ -26,20 +27,6 @@ end
 describe Darwinning::Organism do
   before do
     @org = Darwinning::Organism.new
-
-    class Triple < Darwinning::Organism
-      @name = "Triple"
-      @genes = [
-        Darwinning::Gene.new("first digit", (0..9)),
-        Darwinning::Gene.new("second digit", (0..9)),
-        Darwinning::Gene.new("third digit", (0..9))
-      ]
-
-      def fitness
-        # Try to get the sum of the 3 digits to add up to 15
-        (genotypes.inject{ |sum, x| sum + x } - 15).abs
-      end
-    end
     @triple = Triple.new
   end
 
@@ -74,5 +61,31 @@ describe Darwinning::Organism do
 end
 
 describe Darwinning::Population do
+  before do
+    @pop_triple = Darwinning::Population.new(Triple, 10, 0)
+  end
+
+  it "fitness goal should be set to 0" do
+    @pop_triple.fitness_goal.should == 0
+  end
+
+  it "population size should be 10" do
+    @pop_triple.members.length.should == 10
+  end
+
+  it "population should start on generation 0" do
+    @pop_triple.generation.should == 0
+  end
+
+  it "mutation_rate should default to 0.0" do
+    @pop_triple.mutation_rate.should == 0.0
+  end
+
+  it "make_next_generation! should evolve population by one generation" do
+    old_members = @pop_triple.members
+    @pop_triple.make_next_generation!
+    @pop_triple.generation.should == 1
+    @pop_triple.members.should_not == old_members
+  end
 
 end

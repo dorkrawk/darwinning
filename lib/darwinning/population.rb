@@ -106,7 +106,11 @@ module Darwinning
 
     def evolution_over?
       # check if the fiteness goal or generation limit has been met
-      @generation == @generations_limit or best_member.fitness == @fitness_goal
+      if @generations_limit > 0
+        @generation == @generations_limit or best_member.fitness == @fitness_goal
+      else 
+        @generation == @generations_limit or best_member.fitness == @fitness_goal
+      end
     end
 
     def best_member
