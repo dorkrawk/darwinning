@@ -1,7 +1,8 @@
 module Darwinning
 
   class Gene
-    attr_accessor :name, :value, :value_range, :invalid_values, :units
+    attr_accessor :name, :value_range, :invalid_values, :units
+    attr_accessor :value
 
     def initialize(options = {})
       @name = options.fetch(:name, '')

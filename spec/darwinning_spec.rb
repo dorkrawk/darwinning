@@ -84,10 +84,6 @@ describe Darwinning::Population do
     @pop_triple.generation.should == 0
   end
 
-  it "mutation_rate should default to 0.0" do
-    @pop_triple.mutation_rate.should == 0.0
-  end
-
   it "make_next_generation! should evolve population by one generation" do
     old_members = @pop_triple.members
     @pop_triple.make_next_generation!

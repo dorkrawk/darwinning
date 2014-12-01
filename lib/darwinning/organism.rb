@@ -45,14 +45,8 @@ module Darwinning
       else
         @genotypes = genotypes
       end
-      @fitness = -1
-    end
 
-    # Selects a random genotype from the organism and rexpresses its gene
-    def mutate!
-      random_index = (0..@genotypes.length-1).to_a.sample
-      @genotypes[random_index] = self.class.genes[random_index].express
-      self
+      @fitness = -1
     end
 
     def nice_print
