@@ -7,7 +7,7 @@ module Darwinning
 
     DEFAULT_EVOLUTION_TYPES = [
       Darwinning::EvolutionTypes::Reproduction.new,
-      Darwinning::EvolutionTypes::Mutation.new(mutation_rate: 0.20)
+      Darwinning::EvolutionTypes::Mutation.new(mutation_rate: 0.10)
     ]
 
     def initialize(options = {})
