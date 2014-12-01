@@ -23,8 +23,6 @@ p1 = Darwinning::Population.new(
 	fitness_goal: 0, generations_limit: 100
 )
 
-binding.pry
-
 # puts "First Generation of Population"
 # p1.members.each { |m| m.nice_print }  # print the initial population members
 
