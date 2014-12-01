@@ -14,7 +14,7 @@ module Darwinning
       @members = []
       @generation = 0 # initial population is generation 0
 
-      build_population(population_size)
+      build_population(@population_size)
     end
 
     def build_population(population_size)
@@ -71,12 +71,12 @@ module Darwinning
         pick_sum += selected_member[1]
       end
 
-      selected_member[0]
+      selected_member.first
     end
 
     def mutate!
       @members.map! { |m|
-        if (0..100).to_a.sample < @mutation_rate*100
+        if (0..100).to_a.sample < @mutation_rate * 100
           m.mutate!
         else
           m
@@ -93,7 +93,7 @@ module Darwinning
       used_members = []
       new_members = []
 
-      until new_members.length == @members.length/2
+      until new_members.length == @members.length / 2
         m1 = weighted_select(@members - used_members)
         used_members << m1
         m2 = weighted_select(@members - used_members)
@@ -114,13 +114,13 @@ module Darwinning
       # check if the fiteness goal or generation limit has been met
       if @generations_limit > 0
         @generation == @generations_limit or best_member.fitness == @fitness_goal
-      else 
+      else
         @generation == @generations_limit or best_member.fitness == @fitness_goal
       end
     end
 
     def best_member
-      @members.sort_by { |m| m.fitness }[0]
+      @members.sort_by { |m| m.fitness }.first
     end
 
     def size
