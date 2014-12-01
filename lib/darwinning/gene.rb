@@ -18,4 +18,5 @@ module Darwinning
       @value_range.include?(value) and not @invalid_values.include?(value)
     end
   end
+
 end

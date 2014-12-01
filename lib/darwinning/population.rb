@@ -121,4 +121,5 @@ module Darwinning
       @members.length
     end
   end
+
 end

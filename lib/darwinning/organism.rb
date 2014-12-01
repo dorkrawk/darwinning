@@ -69,4 +69,5 @@ module Darwinning
       self.class.genes
     end
   end
+
 end
