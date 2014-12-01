@@ -54,7 +54,11 @@ module Darwinning
       e = 0.01
       fitness_sum = members.inject(0) { |sum, m| sum + m.fitness }
 
-      weighted_members = members.sort_by { |m| (m.fitness - @fitness_goal).abs }.map { |m| [m, fitness_sum / ((m.fitness - @fitness_goal).abs + e)] }
+      weighted_members = members.sort_by do |m|
+        (m.fitness - @fitness_goal).abs
+      end.map do |m|
+        [m, fitness_sum / ((m.fitness - @fitness_goal).abs + e)]
+      end
 
       weight_sum = weighted_members.inject(0) { |sum, m| sum + m[1] }
       pick = (0..weight_sum).to_a.sample
