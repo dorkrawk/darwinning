@@ -1,14 +1,16 @@
 module Darwinning
 
   class Population
-    attr_accessor :members, :mutation_rate, :generations_limit, :fitness_goal, :organism, :generation
+    attr_accessor :members, :mutation_rate, :generations_limit
+    attr_accessor :fitness_goal, :organism, :generation, :population_size
 
-    def initialize(organism, population_size, fitness_goal, mutation_rate = 0.0, generations_limit = 0, manual_fitness = false)
-      @organism = organism
-      @fitness_goal = fitness_goal
-      @mutation_rate = mutation_rate
-      @generations_limit = generations_limit
-      @manual_fitness = manual_fitness
+    def initialize(options = {})
+      @organism = options.fetch(:organism)
+      @population_size = options.fetch(:population_size)
+      @fitness_goal = options.fetch(:fitness_goal)
+      @mutation_rate = options.fetch(:mutation_rate, 0.0)
+      @generations_limit = options.fetch(:generations_limit, 0)
+      @manual_fitness = options.fetch(:manual_fitness, false)
       @members = []
       @generation = 0 # initial population is generation 0
 
