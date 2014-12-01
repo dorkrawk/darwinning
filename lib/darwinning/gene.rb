@@ -1,4 +1,5 @@
 module Darwinning
+
   class Gene
     attr_accessor :name, :value, :value_range, :invalid_values, :units
 
@@ -10,11 +11,11 @@ module Darwinning
     end
 
     def express
-      (@value_range - @invalid_values).sample
+      (value_range - invalid_values).sample
     end
 
     def is_valid_value?(value)
-      @value_range.include?(value) and not @invalid_values.include?(value)
+      value_range.include?(value) && !invalid_values.include?(value)
     end
   end
 
