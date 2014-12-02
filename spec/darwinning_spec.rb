@@ -1,10 +1,15 @@
 require 'darwinning'
-require './test/classes/triple'
+require './spec/classes/triple'
 
 describe Darwinning::Gene do
   before do
-    @digit = Darwinning::Gene.new("digit", (0..9))
-    @day_hour = Darwinning::Gene.new("hour", (0..23), [0,1,2,3,4,20,21,22,23], "o'clock")
+    @digit = Darwinning::Gene.new(name: "digit", value_range: (0..9))
+    @day_hour = Darwinning::Gene.new(
+      name: "hour",
+      value_range: (0..23),
+      invalid_values: [0, 1, 2, 3, 4, 20, 21, 22, 23],
+      units: "o'clock"
+    )
   end
 
   it "name should be set" do
@@ -16,7 +21,7 @@ describe Darwinning::Gene do
   end
 
   it "invalid values should be set" do
-    @day_hour.invalid_values.should == [0,1,2,3,4,20,21,22,23]
+    @day_hour.invalid_values.should == [0, 1, 2, 3, 4, 20, 21, 22, 23]
   end
 
   it "units should be set" do
@@ -62,7 +67,9 @@ end
 
 describe Darwinning::Population do
   before do
-    @pop_triple = Darwinning::Population.new(Triple, 10, 0)
+    @pop_triple = Darwinning::Population.new(
+      organism: Triple, population_size: 10, fitness_goal: 0
+    )
   end
 
   it "fitness goal should be set to 0" do
@@ -75,10 +82,6 @@ describe Darwinning::Population do
 
   it "population should start on generation 0" do
     @pop_triple.generation.should == 0
-  end
-
-  it "mutation_rate should default to 0.0" do
-    @pop_triple.mutation_rate.should == 0.0
   end
 
   it "make_next_generation! should evolve population by one generation" do

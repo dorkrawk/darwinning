@@ -26,8 +26,8 @@ module ClassLevelInheritableAttributes
 end
 
 module Darwinning
-  class Organism
 
+  class Organism
     include ClassLevelInheritableAttributes
     inheritable_attributes :genes, :name
     attr_accessor :genotypes, :fitness, :name, :genes
@@ -45,14 +45,8 @@ module Darwinning
       else
         @genotypes = genotypes
       end
-      @fitness = -1
-    end
 
-    # Selects a random genotype from the organism and rexpresses its gene
-    def mutate!
-      random_index = (0..@genotypes.length-1).to_a.sample
-      @genotypes[random_index] = self.class.genes[random_index].express
-      self
+      @fitness = -1
     end
 
     def nice_print
@@ -69,4 +63,5 @@ module Darwinning
       self.class.genes
     end
   end
+
 end
