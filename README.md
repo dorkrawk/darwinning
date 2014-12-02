@@ -1,6 +1,6 @@
 Darwinning
 ==========
-[![Gem Version](https://badge.fury.io/rb/darwinning.png)](http://badge.fury.io/rb/darwinning)
+[![Gem Version](https://badge.fury.io/rb/darwinning.svg)](http://badge.fury.io/rb/darwinning)
 
 [gem]: https://rubygems.org/gems/darwinning
 
@@ -27,9 +27,9 @@ class Triple < Darwinning::Organism
 
 	@name = "Triple"
 	@genes = [
-			Darwinning::Gene.new("first digit", (0..9)),
-			Darwinning::Gene.new("second digit", (0..9)),
-			Darwinning::Gene.new("third digit", (0..9))
+			Darwinning::Gene.new(name: "first digit", value_range: (0..9)),
+			Darwinning::Gene.new(name: "second digit", value_range: (0..9)),
+			Darwinning::Gene.new(name: "third digit", value_range: (0..9))
 		]
 
 	def fitness
@@ -38,7 +38,10 @@ class Triple < Darwinning::Organism
 	end
 end 
 
-p = Darwinning::Population.new(Triple, 10, 0, 0.1, 100)
+p = Darwinning::Population.new(
+	organism: Triple, population_size: 10,
+	fitness_goal: 0, generations_limit: 100
+)
 p.evolve!
 
 p.best_member.nice_print # prints the member representing the solution
@@ -57,22 +60,25 @@ class Cookie < Darwinning::Organism
 
 	@name = "Chocolate Chip Cookie"
 	@genes = [
-			Darwinning::Gene.new("white sugar", (0..1), [], "cup"),
-			Darwinning::Gene.new("brown sugar", (0..1), [], "cup"),
-			Darwinning::Gene.new("flour", (0..3), [], "cup"),
-			Darwinning::Gene.new("eggs", (0..3)),
-			Darwinning::Gene.new("baking powder", (0..2), [], "teaspoon"),
-			Darwinning::Gene.new("salt", (0..2), [], "teaspoon"),
-			Darwinning::Gene.new("butter", (0..2), [], "cup"),
-			Darwinning::Gene.new("vanilla extract", (0..2), [], "teaspoon"),
-			Darwinning::Gene.new("chocolate chips", (0..20), [], "ounce"),
-			Darwinning::Gene.new("oven temp", (300..400), [], "degrees F"),
-			Darwinning::Gene.new("cook time", (5..20), [], "minute")
+			Darwinning::Gene.new(name: "white sugar", value_range: (0..1), units: "cup"),
+			Darwinning::Gene.new(name: "brown sugar", value_range: (0..1), units: "cup"),
+			Darwinning::Gene.new(name: "flour", value_range: (0..3), units: "cup"),
+			Darwinning::Gene.new(name: "eggs", value_range: (0..3)),
+			Darwinning::Gene.new(name: "baking powder", value_range: (0..2), units: "teaspoon"),
+			Darwinning::Gene.new(name: "salt", value_range: (0..2), units: "teaspoon"),
+			Darwinning::Gene.new(name: "butter", value_range: (0..2), units: "cup"),
+			Darwinning::Gene.new(name: "vanilla extract", value_range: (0..2), units: "teaspoon"),
+			Darwinning::Gene.new(name: "chocolate chips", value_range: (0..20), units: "ounce"),
+			Darwinning::Gene.new(name: "oven temp", value_range: (300..400), units: "degrees F"),
+			Darwinning::Gene.new(name: "cook time", value_range: (5..20), units: "minute")
 		]
 
 end
 
-p = Darwinning::Population.new(Cookie, 10, 5, 0.1, 100, true)
+p = Darwinning::Population.new(
+	organism: Cookie, population_size: 10,
+	fitness_goal: 5, generations_limit: 100
+)
 
 first_gen_ratings = [1.5, 4, 3, 3.5, 2, 1, 1.5, 3, 2.5, 0.5]
 p.set_members_fitness!(first_gen_ratings)
@@ -99,3 +105,7 @@ end
 
 ## Built by:
 * [Dave Schwantes](https://github.com/dorkrawk "dorkrawk")
+
+### With help from:
+* [Cameron Dutro](https://github.com/camertron "camertron")
+* [Maurizio Del Corno](https://github.com/druzn3k "druzn3k")
