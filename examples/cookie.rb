@@ -1,4 +1,4 @@
-require_relative '../lib/darwinning'
+require 'darwinning'
 
 class Cookie < Darwinning::Organism
 	@name = "Chocolate Chip Cookie"

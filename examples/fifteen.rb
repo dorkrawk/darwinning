@@ -1,4 +1,4 @@
-require_relative '../lib/darwinning'
+require 'darwinning'
 
 class Triple < Darwinning::Organism
 	@name = "Triple"

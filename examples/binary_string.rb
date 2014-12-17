@@ -1,4 +1,4 @@
-require_relative '../lib/darwinning'
+require 'darwinning'
 
 class BinaryOrganism < Darwinning::Organism
 	10.times do |s|

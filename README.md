@@ -16,6 +16,8 @@ gem install darwinning
 Examples
 --------
 
+*(to run the included examples, make sure you've installed the gem first)*
+
 ### Fifteen
 
 Here's an dumb example of how you might use Darwinning to solve a pointless problem:
