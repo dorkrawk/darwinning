@@ -34,6 +34,49 @@ module Darwinning
       end
     end
 
+    def set_members_fitness!(fitness_values)
+      return false if fitness_values.size != members.size
+      members.to_enum.each_with_index { |m, i| m.fitness = fitness_values[i] }
+    end
+
+    def make_next_generation!
+      temp_members = members
+      used_members = []
+      new_members = []
+
+      until new_members.length == members.length / 2
+        m1 = weighted_select(members - used_members)
+        used_members << m1
+        m2 = weighted_select(members - used_members)
+        used_members << m2
+
+        new_members << apply_pairwise_evolutions(organism, m1, m2)
+      end
+
+      new_members.flatten!
+      @members = apply_non_pairwise_evolutions(new_members)
+      @generation += 1
+    end
+
+    def evolution_over?
+      # check if the fiteness goal or generation limit has been met
+      if generations_limit > 0
+        generation == generations_limit || best_member.fitness == fitness_goal
+      else
+        generation == generations_limit || best_member.fitness == fitness_goal
+      end
+    end
+
+    def best_member
+      @members.sort_by { |m| m.fitness }.first
+    end
+
+    def size
+      @members.length
+    end
+
+    private
+
     def weighted_select(members)
       e = 0.01
       fitness_sum = members.inject(0) { |sum, m| sum + m.fitness }
@@ -58,29 +101,6 @@ module Darwinning
       selected_member.first
     end
 
-    def set_members_fitness!(fitness_values)
-      members.to_enum.each_with_index { |m, i| m.fitness = fitness_values[i] }
-    end
-
-    def make_next_generation!
-      temp_members = members
-      used_members = []
-      new_members = []
-
-      until new_members.length == members.length / 2
-        m1 = weighted_select(members - used_members)
-        used_members << m1
-        m2 = weighted_select(members - used_members)
-        used_members << m2
-
-        new_members << apply_pairwise_evolutions(organism, m1, m2)
-      end
-
-      new_members.flatten!
-      @members = apply_non_pairwise_evolutions(new_members)
-      @generation += 1
-    end
-
     def apply_pairwise_evolutions(organism, m1, m2)
       evolution_types.inject([m1, m2]) do |ret, evolution_type|
         if evolution_type.pairwise?
@@ -100,23 +120,6 @@ module Darwinning
         end
       end
     end
-
-    def evolution_over?
-      # check if the fiteness goal or generation limit has been met
-      if generations_limit > 0
-        generation == generations_limit || best_member.fitness == fitness_goal
-      else
-        generation == generations_limit || best_member.fitness == fitness_goal
-      end
-    end
-
-    def best_member
-      @members.sort_by { |m| m.fitness }.first
-    end
-
-    def size
-      @members.length
-    end
+    
   end
-
 end
