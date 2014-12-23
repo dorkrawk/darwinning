@@ -91,4 +91,13 @@ describe Darwinning::Population do
     @pop_triple.members.should_not == old_members
   end
 
+  describe "#history" do
+
+    it "should be generations + 1 in size" do
+      @pop_triple.evolve!
+      expect(@pop_triple.history.size).to eq @pop_triple.generation + 1
+    end
+
+  end
+
 end

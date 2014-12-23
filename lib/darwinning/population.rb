@@ -1,9 +1,9 @@
 module Darwinning
 
   class Population
-    attr_accessor :members, :generations_limit, :fitness_goal
-    attr_accessor :organism, :generation, :population_size
-    attr_accessor :evolution_types
+    attr_reader :members, :generations_limit, :fitness_goal,
+                :organism, :population_size, :generation,
+                :evolution_types, :history
 
     DEFAULT_EVOLUTION_TYPES = [
       Darwinning::EvolutionTypes::Reproduction.new,
@@ -18,8 +18,10 @@ module Darwinning
       @evolution_types = options.fetch(:evolution_types, DEFAULT_EVOLUTION_TYPES)
       @members = []
       @generation = 0 # initial population is generation 0
+      @history = []
 
       build_population(@population_size)
+      @history << @members
     end
 
     def build_population(population_size)
@@ -55,6 +57,7 @@ module Darwinning
 
       new_members.flatten!
       @members = apply_non_pairwise_evolutions(new_members)
+      @history << @members
       @generation += 1
     end
 
@@ -120,6 +123,6 @@ module Darwinning
         end
       end
     end
-    
+
   end
 end
