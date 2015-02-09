@@ -26,7 +26,7 @@ module Darwinning
 
     def build_population(population_size)
       population_size.times do |i|
-        @members << organism.new
+        @members << build_member
       end
     end
 
@@ -78,7 +78,26 @@ module Darwinning
       @members.length
     end
 
+    def organism_klass
+      real_organism = @organism
+      fitness_function = @fitness_function
+      klass = Class.new(Darwinning::Organism) do
+        @name = real_organism.name
+        @genes = real_organism.genes
+      end
+    end
+
     private
+
+    def build_member
+      member = organism.new
+      unless member.class.superclass.to_s == "Darwinning::Organism"
+        member.class.genes.each do |gene|
+          member.send("#{gene.name}=", gene.express)
+        end
+      end
+      member
+    end
 
     def weighted_select(members)
       e = 0.01
