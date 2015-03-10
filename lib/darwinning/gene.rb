@@ -11,7 +11,12 @@ module Darwinning
     end
 
     def express
-      (value_range - invalid_values).sample
+      if rand(value_range).is_a? Float
+        # Float value ranges can't have invalid values
+        rand(value_range)
+      else
+        (value_range - invalid_values).sample
+      end
     end
 
     def is_valid_value?(value)
