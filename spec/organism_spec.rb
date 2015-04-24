@@ -1,37 +1,35 @@
 require 'spec_helper'
 
 describe Darwinning::Organism do
-  before do
-    @org = Darwinning::Organism.new
-    @triple = Triple.new
-  end
+  let(:org) { Darwinning::Organism.new }
+  let(:triple) { Triple.new }
 
   it "name should default to blank" do
-    @org.name.should == ""
+    expect(org.name).to eq ""
   end
 
   it "genes should default to empty array" do
-    @org.genes.should == []
+    expect(org.genes).to eq []
   end
 
   it "genotypes should initialize to empty array if genes is empty" do
-    @org.genotypes.should == []
+    expect(org.genotypes).to eq []
   end
 
   it "fitness should default to -1" do
-    @org.fitness.should == -1
+    expect(org.fitness).to eq -1
   end
 
   it "child class should set name" do
-    @triple.name.should == "Triple"
+    expect(triple.name).to eq "Triple"
   end
 
   it "child class should set genes" do
-    @triple.genes.length.should == 3 # not the best test...
+    expect(triple.genes.length).to eq 3
   end
 
   it "child class should initialize genotypes from genes" do
-    @triple.genotypes.length.should == 3 # not the best test...
+    expect(triple.genotypes.length).to eq 3
   end
 
 end
