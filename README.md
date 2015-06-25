@@ -22,7 +22,7 @@ Examples
 
 Here's an dumb example of how you might use Darwinning to solve a pointless problem:
 
-Let's say for some reason you need a set of 3 number that add up to 15.  This is a strange problem to have, but let's solve it anyway.
+Let's say for some reason you need a set of 3 numbers that add up to 15.  This is a strange problem to have, but let's solve it anyway.
 
 ```ruby
 class Triple < Darwinning::Organism
