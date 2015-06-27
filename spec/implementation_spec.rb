@@ -1,22 +1,5 @@
 require 'spec_helper'
 
-class NewTriple
-  extend Darwinning
-
-  GENE_RANGES = {
-    first_digit: (0..9),
-    second_digit: (0..9),
-    third_digit: (0..9)
-  }
-
-  attr_accessor :first_digit, :second_digit, :third_digit
-
-  def fitness
-    # Try to get the sum of the 3 digits to add up to 15
-    (first_digit + second_digit + third_digit - 15).abs
-  end
-end
-
 describe Darwinning::Implementation do
   let(:triple_pop) { NewTriple.build_population(10, 100, 0) }
 
@@ -36,6 +19,32 @@ describe Darwinning::Implementation do
   describe '#genes' do
     it 'creates a gene for every value in GENE_RANGES' do
       expect(NewTriple.genes.size).to eq NewTriple::GENE_RANGES.size
+    end
+  end
+
+  describe '#is_evolveable?' do
+    it 'is true for a class that implments the necessary Darwinning features' do
+      expect(NewTriple.is_evolveable?).to be true
+    end
+
+    it 'is false if the class is missing get GENE_RANGES constant' do
+      expect(GenelessChimp.is_evolveable?).to be false
+    end
+
+    it 'is false if GENE_RANGES not a Hash' do
+      expect(BadGenesChimp.is_evolveable?).to be false
+    end
+
+    it 'is false if the genes are invalid' do
+      expect(NoValuesChimp.is_evolveable?).to be false
+    end
+
+    it 'is false if GENE_RANGES is empty' do
+      expect(EmptyGenesChimp.is_evolveable?).to be false
+    end
+
+    it 'is false if the class is missing a fitness method' do
+      expect(GenelessChimp.is_evolveable?).to be false
     end
   end
 end
