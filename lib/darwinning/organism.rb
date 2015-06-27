@@ -26,7 +26,6 @@ module ClassLevelInheritableAttributes
 end
 
 module Darwinning
-
   class Organism
     include ClassLevelInheritableAttributes
     inheritable_attributes :genes, :name
@@ -36,8 +35,7 @@ module Darwinning
     @name = ""
 
     def initialize(genotypes = [])
-      #TODO: catch errors if genotype.length != @genotypes.length
-      # catch if genotype[x] is not a valid value for @gene[x]
+      throw "Genotypes array provided to new Organism must be the size of the Organism's genotype." if genotypes.length != @genotypes.length
 
       if genotypes == []
         # fill genotypes with expressed Genes

@@ -1,5 +1,4 @@
 module Darwinning
-
   class Gene
     attr_reader :name, :value_range, :invalid_values, :units, :value
 

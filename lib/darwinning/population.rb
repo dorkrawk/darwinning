@@ -1,6 +1,8 @@
 module Darwinning
-
   class Population
+
+    EPSILON = 0.01
+
     attr_reader :members, :generations_limit, :fitness_goal,
                 :organism, :population_size, :generation,
                 :evolution_types, :history
@@ -62,7 +64,7 @@ module Darwinning
     end
 
     def evolution_over?
-      # check if the fiteness goal or generation limit has been met
+      # check if the fitness goal or generation limit has been met
       if generations_limit > 0
         generation == generations_limit || best_member.fitness == fitness_goal
       else
@@ -100,13 +102,12 @@ module Darwinning
     end
 
     def weighted_select(members)
-      e = 0.01
       fitness_sum = members.inject(0) { |sum, m| sum + m.fitness }
 
       weighted_members = members.sort_by do |m|
         (m.fitness - fitness_goal).abs
       end.map do |m|
-        [m, fitness_sum / ((m.fitness - fitness_goal).abs + e)]
+        [m, fitness_sum / ((m.fitness - fitness_goal).abs + EPSILON)]
       end
 
       weight_sum = weighted_members.inject(0) { |sum, m| sum + m[1] }
