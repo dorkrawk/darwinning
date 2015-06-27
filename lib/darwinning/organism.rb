@@ -35,8 +35,6 @@ module Darwinning
     @name = ""
 
     def initialize(genotypes = [])
-      throw "Genotypes array provided to new Organism must be the size of the Organism's genotype." if genotypes.length != @genotypes.length
-
       if genotypes == []
         # fill genotypes with expressed Genes
         @genotypes = self.class.genes.map { |g| g.express } # Gene expressions
