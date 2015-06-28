@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Darwinning::Implementation do
-  let(:triple_pop) { NewTriple.build_population(10, 100, 0) }
+  let(:triple_pop) { NewTriple.build_population(0, 10, 100) }
 
   describe '#build_population' do
     it 'creates a population of the correct size' do

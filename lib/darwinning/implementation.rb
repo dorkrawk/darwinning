@@ -5,9 +5,11 @@ module Darwinning
       gene_ranges.map { |k,v| Gene.new(name: k, value_range: v) }
     end
 
-    def build_population(population_size = 10, generation_limit = 100, fitness_goal)
+    def build_population(fitness_goal, population_size = 10, generation_limit = 100, 
+                         evolution_types = Population::DEFAULT_EVOLUTION_TYPES)
       Population.new(organism: self, population_size: population_size,
-                     generation_limit: generation_limit, fitness_goal: fitness_goal)
+                     generation_limit: generation_limit, fitness_goal: fitness_goal,
+                     evolution_types: evolution_types)
     end
 
     def is_evolveable?

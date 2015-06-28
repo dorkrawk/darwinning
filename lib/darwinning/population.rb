@@ -8,7 +8,7 @@ module Darwinning
                 :evolution_types, :history
 
     DEFAULT_EVOLUTION_TYPES = [
-      Darwinning::EvolutionTypes::Reproduction.new,
+      Darwinning::EvolutionTypes::Reproduction.new(crossover_method: :alternating_swap),
       Darwinning::EvolutionTypes::Mutation.new(mutation_rate: 0.10)
     ]
 
@@ -39,7 +39,7 @@ module Darwinning
     end
 
     def set_members_fitness!(fitness_values)
-      return false if fitness_values.size != members.size
+      throw "Invaid number of fitness values for population size" if fitness_values.size != members.size
       members.to_enum.each_with_index { |m, i| m.fitness = fitness_values[i] }
     end
 

@@ -2,6 +2,13 @@ module Darwinning
   module EvolutionTypes
     class Reproduction
 
+      # Available crossover_methods:
+      #   :alternating_swap
+      #   :random_swap
+      def initialize(options = {})
+        @crossover_method = options.fetch(:crossover_method, :alternating_swap)
+      end
+
       def evolve(organism, m1, m2)
         sexytimes(organism, m1, m2)
       end
@@ -13,7 +20,7 @@ module Darwinning
       protected
 
       def sexytimes(organism, m1, m2)
-        new_genotypes = alternating_swap(m1, m2)
+        new_genotypes = send(@crossover_method, m1, m2)
 
         [organism.new(new_genotypes.first), organism.new(new_genotypes.last)]
       end
