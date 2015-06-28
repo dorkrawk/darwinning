@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Darwinning::Implementation do
   let(:triple_pop) { NewTriple.build_population(0, 10, 100) }
+  let(:triple_pop_member) { triple_pop.members.first }
 
   describe '#build_population' do
     it 'creates a population of the correct size' do
@@ -45,6 +46,16 @@ describe Darwinning::Implementation do
 
     it 'is false if the class is missing a fitness method' do
       expect(GenelessChimp.is_evolveable?).to be false
+    end
+  end
+
+  describe 'population members' do 
+    it 'is of the parent class' do
+      expect(triple_pop_member.class.name).to eq "NewTriple"
+    end
+
+    it 'has genotype values validly set' do
+      expect(NewTriple.genes.first.value_range).to include(triple_pop_member.send(NewTriple.genes.first.name))
     end
   end
 end
