@@ -22,7 +22,12 @@ module Darwinning
       def sexytimes(organism, m1, m2)
         new_genotypes = send(@crossover_method, m1, m2)
 
-        [organism.new(new_genotypes.first), organism.new(new_genotypes.last)]
+        organism1 = organism.new
+        organism1.genotypes = new_genotypes.first
+        organism2 = organism.new
+        organism2.genotypes = new_genotypes.last
+
+        [organism1, organism2]
       end
 
       def alternating_swap(m1, m2)

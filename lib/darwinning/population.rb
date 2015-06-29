@@ -68,7 +68,7 @@ module Darwinning
       if generations_limit > 0
         generation == generations_limit || best_member.fitness == fitness_goal
       else
-        generation == generations_limit || best_member.fitness == fitness_goal
+        best_member.fitness == fitness_goal
       end
     end
 
@@ -93,10 +93,14 @@ module Darwinning
 
     def build_member
       member = organism.new
+      member_genotypes = []
       unless member.class.superclass.to_s == "Darwinning::Organism"
         member.class.genes.each do |gene|
-          member.send("#{gene.name}=", gene.express)
+          gene_expression = gene.express
+          member.send("#{gene.name}=", gene_expression)
+          member_genotypes << gene_expression
         end
+        # need to set genotypes here  
       end
       member
     end

@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe Darwinning::Implementation do
-  let(:triple_pop) { NewTriple.build_population(0, 10, 100) }
+  let(:triple_pop) { NewTriple.build_population(0, 20, 1000) }
   let(:triple_pop_member) { triple_pop.members.first }
 
   describe '#build_population' do
     it 'creates a population of the correct size' do
-      expect(triple_pop.size).to eq 10
+      expect(triple_pop.size).to eq 20
+    end
+
+    it 'creates a population with the correct generation limit' do
+      expect(triple_pop.generations_limit).to eq 1000
     end
 
     it 'uses the fitness function defined by #fitness' do
@@ -56,6 +60,14 @@ describe Darwinning::Implementation do
 
     it 'has genotype values validly set' do
       expect(NewTriple.genes.first.value_range).to include(triple_pop_member.send(NewTriple.genes.first.name))
+    end
+
+    it 'has a genotypes method' do
+      expect(triple_pop_member.respond_to?(:genotypes)).to be true
+    end
+
+    it 'has a genes method' do
+      expect(triple_pop_member.respond_to?(:genes)).to be true
     end
   end
 end
