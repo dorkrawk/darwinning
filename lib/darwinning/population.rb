@@ -47,14 +47,13 @@ module Darwinning
       temp_members = members
       new_members = []
 
-      until new_members.length == members.length / 2
+      until new_members.length == members.length
         m1 = weighted_select(members)
         m2 = weighted_select(members)
 
-        new_members << apply_pairwise_evolutions(organism, m1, m2)
+        new_members += apply_pairwise_evolutions(organism, m1, m2)
       end
 
-      new_members.flatten!
       @members = apply_non_pairwise_evolutions(new_members)
       @history << @members
       @generation += 1
