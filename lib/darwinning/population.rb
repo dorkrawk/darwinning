@@ -45,19 +45,15 @@ module Darwinning
 
     def make_next_generation!
       temp_members = members
-      used_members = []
       new_members = []
 
-      until new_members.length == members.length / 2
-        m1 = weighted_select(members - used_members)
-        used_members << m1
-        m2 = weighted_select(members - used_members)
-        used_members << m2
+      until new_members.length == members.length
+        m1 = weighted_select(members)
+        m2 = weighted_select(members)
 
-        new_members << apply_pairwise_evolutions(organism, m1, m2)
+        new_members += apply_pairwise_evolutions(organism, m1, m2)
       end
 
-      new_members.flatten!
       @members = apply_non_pairwise_evolutions(new_members)
       @history << @members
       @generation += 1
