@@ -1,5 +1,5 @@
 class NewTriple
-  extend Darwinning
+  include Darwinning
 
   GENE_RANGES = {
     first_digit: (0..9),

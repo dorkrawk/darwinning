@@ -1,7 +1,7 @@
 require '../lib/darwinning'
 
 class Triple
-  extend Darwinning
+  include Darwinning
 
   GENE_RANGES = {
     first_digit: (0..9),

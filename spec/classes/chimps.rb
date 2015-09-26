@@ -1,21 +1,21 @@
 class GenelessChimp
-  extend Darwinning
+  include Darwinning
 end
 
 class BadGenesChimp
-  extend Darwinning
+  include Darwinning
 
   GENE_RANGES = "throw poop?"
 end
 
 class EmptyGenesChimp
-  extend Darwinning
+  include Darwinning
 
   GENE_RANGES = {}
 end
 
 class NoValuesChimp
-  extend Darwinning
+  include Darwinning
 
   GENE_RANGES = {
     throwing_range: (0..100)
