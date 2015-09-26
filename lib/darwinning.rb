@@ -52,7 +52,7 @@ module Darwinning
   end
 
   def genes
-    nil
+    self.class.genes
   end
 
   def genotypes

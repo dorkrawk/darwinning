@@ -69,5 +69,14 @@ describe Darwinning do
     it 'has a genes method' do
       expect(triple_pop_member.respond_to?(:genes)).to be true
     end
+
+    it 'has genes that are Darwinning::Genes' do
+      gene_classes = triple_pop_member.genes.map { |g| g.class.name }.uniq.compact
+      expect(gene_classes).to eq ["Darwinning::Gene"]
+    end
+
+    it 'has gene for each of the class defined genes' do
+      expect(triple_pop_member.genes).to eq NewTriple.genes
+    end
   end
 end

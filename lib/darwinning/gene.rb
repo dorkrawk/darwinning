@@ -9,6 +9,18 @@ module Darwinning
       @units = options.fetch(:units, '')
     end
 
+    def ==(o)
+      o.class == self.class &&
+      o.name == name &&
+      o.value_range == value_range &&
+      o.invalid_values == invalid_values &&
+      o.units == units
+    end
+
+    def eql?(o)
+      o == self
+    end
+
     def express
       (value_range - invalid_values).sample
     end
