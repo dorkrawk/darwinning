@@ -53,7 +53,7 @@ describe Darwinning::Implementation do
     end
   end
 
-  describe 'population members' do 
+  describe 'population member' do 
     it 'is of the parent class' do
       expect(triple_pop_member.class.name).to eq "NewTriple"
     end
