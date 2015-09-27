@@ -111,3 +111,4 @@ end
 ### With help from:
 * [Cameron Dutro](https://github.com/camertron "camertron")
 * [Maurizio Del Corno](https://github.com/druzn3k "druzn3k")
+* [Evan Brynne](https://github.com/ebrynne "ebrynne")
