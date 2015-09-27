@@ -16,7 +16,7 @@ gem install darwinning
 Usage
 --------
 
-There are two ways of using **Darwinning**. You can either start with a class that is a subclass of `Darwinning::Organism` or you can include `Darwinning` in an existing class that you would like to make evolveable.
+There are two ways of using Darwinning. You can either start with a class that is a subclass of `Darwinning::Organism` or you can include `Darwinning` in an existing class that you would like to make evolveable.
 
 ### Include Style:
 
@@ -57,10 +57,10 @@ Once you have your organism class that includes Darwinning, you can create a pop
 
 ```ruby
 if Triple.is_evolveable?
-	triple_pop = Triple.build_population(0, 10, 100)
-	triple_pop.evolve!
+  triple_pop = Triple.build_population(0, 10, 100)
+  triple_pop.evolve! # evolve until fitness goal is or generations limit is met
 
-	pp "Best member: #{triple_pop.best_member"
+  pp "Best member: #{triple_pop.best_member}"
 end
 ```
 
@@ -74,17 +74,17 @@ Let's solve the same dumb problem we looked at before...
 require 'darwinning'
 
 class Triple < Darwinning::Organism
-	@name = "Triple"
-	@genes = [
-		Darwinning::Gene.new(name: "first digit", value_range: (0..100)),
-		Darwinning::Gene.new(name: "second digit", value_range: (0..100)),
-		Darwinning::Gene.new(name: "third digit", value_range: (0..100))
-	]
+  @name = "Triple"
+  @genes = [
+    Darwinning::Gene.new(name: "first digit", value_range: (0..100)),
+    Darwinning::Gene.new(name: "second digit", value_range: (0..100)),
+    Darwinning::Gene.new(name: "third digit", value_range: (0..100))
+  ]
 
-	def fitness
-	# Try to get the sum of the 3 digits to add up to 100
-		(genotypes.values.inject { |sum, x| sum + x } - 100).abs
-	end
+  def fitness
+  # Try to get the sum of the 3 digits to add up to 100
+    (genotypes.values.inject { |sum, x| sum + x } - 100).abs
+  end
 end
 ```
 
@@ -92,12 +92,27 @@ With this `Darwinning::Organism` class, you can now build a population and evolv
 
 ```ruby
 triple_pop = Darwinning::Population.new(
-	organism: Triple, population_size: 10,
-	fitness_goal: 0, generations_limit: 100
+  organism: Triple, population_size: 10,
+  fitness_goal: 0, generations_limit: 100
 )
 triple_pop.evolve!
 
-pp "Best member: #{triple_pop.best_member"
+pp "Best member: #{triple_pop.best_member}"
+```
+
+### Stepping Through Generations Manually
+
+```ruby
+# pop is a Darwinning::Population of organisms
+puts pop.generation
+# 0
+pop.make_next_generation!
+puts pop.generation
+# 1
+
+# you can view a history of population's evolion
+puts pop.history
+# [[gen0_member1, gen0_member2,...], [gen1_member1, gen1_member2,...]]
 ```
 
 ### More Examples
