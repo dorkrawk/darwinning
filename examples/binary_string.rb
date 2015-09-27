@@ -8,7 +8,7 @@ class BinaryOrganism < Darwinning::Organism
   end
 
 	def fitness
-		(genotypes.inject { |sum, x| sum + x } - 9).abs
+		(genotypes.values.inject { |sum, x| sum + x } - 9).abs
 	end
 end
 

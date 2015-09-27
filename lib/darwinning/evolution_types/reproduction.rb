@@ -22,41 +22,51 @@ module Darwinning
       def sexytimes(organism, m1, m2)
         new_genotypes = send(@crossover_method, m1, m2)
 
-        organism1 = organism.new
-        organism1.genotypes = new_genotypes.first
-        organism2 = organism.new
-        organism2.genotypes = new_genotypes.last
+        organism1 = new_member_from_genotypes(organism, new_genotypes.first)
+        organism2 = new_member_from_genotypes(organism, new_genotypes.last)
 
         [organism1, organism2]
       end
 
-      def alternating_swap(m1, m2)
-        genotypes1 = []
-        genotypes2 = []
+      def new_member_from_genotypes(organism, genotypes)
+        new_member = organism.new
+        if organism.superclass.to_s == "Darwinning::Organism"
+          new_member.genotypes = genotypes
+        else
+          new_member.genes.each do |gene|
+            new_member.send("#{gene.name}=", genotypes[gene])
+          end
+        end
+        new_member
+      end
 
-        m1.genotypes.zip(m2.genotypes).each do |g|
-          if m1.genotypes.index(g[0]) % 2 == 0
-            genotypes1 << g[0]
-            genotypes2 << g[1]
+      def alternating_swap(m1, m2)
+        genotypes1 = {}
+        genotypes2 = {}
+
+        m1.genes.each_with_index do |gene, i|
+          if i % 2 == 0
+            genotypes1[gene] = m1.genotypes[gene]
+            genotypes2[gene] = m2.genotypes[gene]
           else
-            genotypes1 << g[1]
-            genotypes2 << g[0]
+            genotypes1[gene] = m2.genotypes[gene]
+            genotypes2[gene] = m1.genotypes[gene]
           end
         end
 
         [genotypes1, genotypes2]
       end
 
-      def random_swap(m1, m2)
-        genotypes1 = []
-        genotypes2 = []
+      def random_swap(m1, m2)        
+        genotypes1 = {}
+        genotypes2 = {}
 
-        m1.genotypes.zip(m2.genotypes).each do |g|
-          g1_parent = [0,1].sample
-          g2_parent = [0,1].sample
+        m1.genes.each do |gene|
+          g1_parent = [m1,m2].sample
+          g2_parent = [m1,m2].sample
 
-          genotypes1 << g[g1_parent]
-          genotypes2 << g[g2_parent]
+          genotypes1[gene] = g1_parent.genotypes[gene]
+          genotypes2[gene] = g2_parent.genotypes[gene]          
         end
 
         [genotypes1, genotypes2]

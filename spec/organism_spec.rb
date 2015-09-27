@@ -13,7 +13,7 @@ describe Darwinning::Organism do
   end
 
   it "genotypes should initialize to empty array if genes is empty" do
-    expect(org.genotypes).to eq []
+    expect(org.genotypes).to be {}
   end
 
   it "fitness should default to -1" do

@@ -89,14 +89,11 @@ module Darwinning
 
     def build_member
       member = organism.new
-      member_genotypes = []
       unless member.class.superclass.to_s == "Darwinning::Organism"
         member.class.genes.each do |gene|
           gene_expression = gene.express
           member.send("#{gene.name}=", gene_expression)
-          member_genotypes << gene_expression
         end
-        # need to set genotypes here  
       end
       member
     end

@@ -56,6 +56,10 @@ module Darwinning
   end
 
   def genotypes
-    nil
+    gt = {}
+    genes.each do |gene|
+      gt[gene] = self.send(gene.name)
+    end 
+    gt
   end
 end

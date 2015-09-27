@@ -62,10 +62,6 @@ describe Darwinning do
       expect(NewTriple.genes.first.value_range).to include(triple_pop_member.send(NewTriple.genes.first.name))
     end
 
-    it 'has a genotypes method' do
-      expect(triple_pop_member.respond_to?(:genotypes)).to be true
-    end
-
     it 'has a genes method' do
       expect(triple_pop_member.respond_to?(:genes)).to be true
     end
@@ -77,6 +73,15 @@ describe Darwinning do
 
     it 'has gene for each of the class defined genes' do
       expect(triple_pop_member.genes).to eq NewTriple.genes
+    end
+
+    it 'has a genotypes method' do
+      expect(triple_pop_member.respond_to?(:genotypes)).to be true
+    end
+
+    it 'has genotype values for every gene' do
+      genotype_values_equal = triple_pop_member.genotypes.map { |k, v| v == triple_pop_member.send(k.name) }.uniq.compact
+      expect(genotype_values_equal).to eq [true]
     end
   end
 end

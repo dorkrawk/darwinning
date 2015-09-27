@@ -34,10 +34,15 @@ module Darwinning
     @genes = []  # Gene instances
     @name = ""
 
-    def initialize(genotypes = [])
-      if genotypes == []
+    def initialize(genotypes = {})
+      if genotypes == {}
         # fill genotypes with expressed Genes
-        @genotypes = self.class.genes.map { |g| g.express } # Gene expressions
+        @genotypes = {}
+        genes.each do |g|
+          # make genotypes a hash with gene objects as keys
+          @genotypes[g] = g.express
+        end
+        #@genotypes = self.class.genes.map { |g| g.express } # Gene expressions
       else
         @genotypes = genotypes
       end
