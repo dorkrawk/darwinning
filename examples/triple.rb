@@ -1,4 +1,5 @@
 require '../lib/darwinning'
+require 'pp'
 
 class Triple
   include Darwinning
@@ -9,7 +10,7 @@ class Triple
     third_number: (0..100)
   }
 
-  attr_accessor :first_number, :second_number, :third_number, :genotypes
+  attr_accessor :first_number, :second_number, :third_number
 
   def fitness
     # Try to get the sum of the 3 digits to add up to 100
@@ -20,7 +21,15 @@ end
 if Triple.is_evolveable?
 
   triple_pop = Triple.build_population(0, 10, 100)
-  triple_pop.evolve! # create new generations until fitness goal is met or generation limit is met
+
+  pp "g 0"
+  pp triple_pop.members
+
+  triple_pop.make_next_generation!
+
+  pp "g 1"
+  pp triple_pop.members
+  #triple_pop.evolve! # create new generations until fitness goal is met or generation limit is met
 
 
   puts "Solution"

@@ -9,8 +9,8 @@ module Darwinning
         @crossover_method = options.fetch(:crossover_method, :alternating_swap)
       end
 
-      def evolve(organism, m1, m2)
-        sexytimes(organism, m1, m2)
+      def evolve(m1, m2)
+        sexytimes(m1, m2)
       end
 
       def pairwise?
@@ -19,18 +19,21 @@ module Darwinning
 
       protected
 
-      def sexytimes(organism, m1, m2)
+      def sexytimes(m1, m2)
+        raise "Only organisms of the same type can breed" unless m1.class == m2.class
+
         new_genotypes = send(@crossover_method, m1, m2)
 
-        organism1 = new_member_from_genotypes(organism, new_genotypes.first)
-        organism2 = new_member_from_genotypes(organism, new_genotypes.last)
+        organism_klass = m1.class
+        organism1 = new_member_from_genotypes(organism_klass, new_genotypes.first)
+        organism2 = new_member_from_genotypes(organism_klass, new_genotypes.last)
 
         [organism1, organism2]
       end
 
-      def new_member_from_genotypes(organism, genotypes)
-        new_member = organism.new
-        if organism.superclass.to_s == "Darwinning::Organism"
+      def new_member_from_genotypes(organism_klass, genotypes)
+        new_member = organism_klass.new
+        if organism_klass.superclass.to_s == "Darwinning::Organism"
           new_member.genotypes = genotypes
         else
           new_member.genes.each do |gene|

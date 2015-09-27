@@ -21,6 +21,10 @@ module Darwinning
       o == self
     end
 
+    def hash
+      name.hash ^ value_range.hash ^ invalid_values.hash ^ units.hash ^ value.hash
+    end
+
     def express
       (value_range - invalid_values).sample
     end

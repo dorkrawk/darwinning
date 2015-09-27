@@ -51,7 +51,7 @@ module Darwinning
         m1 = weighted_select(members)
         m2 = weighted_select(members)
 
-        new_members += apply_pairwise_evolutions(organism, m1, m2)
+        new_members += apply_pairwise_evolutions(m1, m2)
       end
 
       @members = apply_non_pairwise_evolutions(new_members)
@@ -121,10 +121,10 @@ module Darwinning
       selected_member.first
     end
 
-    def apply_pairwise_evolutions(organism, m1, m2)
+    def apply_pairwise_evolutions(m1, m2)
       evolution_types.inject([m1, m2]) do |ret, evolution_type|
         if evolution_type.pairwise?
-          evolution_type.evolve(organism, *ret)
+          evolution_type.evolve(*ret)
         else
           ret
         end

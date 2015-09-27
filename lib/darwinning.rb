@@ -4,6 +4,7 @@ require_relative 'darwinning/evolution_types/mutation'
 require_relative 'darwinning/evolution_types/reproduction'
 require_relative 'darwinning/population'
 require_relative 'darwinning/config'
+require 'pp'
 
 module Darwinning
   extend Config
@@ -59,7 +60,7 @@ module Darwinning
     gt = {}
     genes.each do |gene|
       gt[gene] = self.send(gene.name)
-    end 
+    end
     gt
   end
 end

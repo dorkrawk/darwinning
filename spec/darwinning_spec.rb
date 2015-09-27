@@ -84,4 +84,15 @@ describe Darwinning do
       expect(genotype_values_equal).to eq [true]
     end
   end
+
+  describe 'population evolution' do
+    let(:evolving_triple_pop) { NewTriple.build_population(0, 10, 100) }
+
+    it 'sets the genotypes of the next generation' do
+      evolving_triple_pop.make_next_generation!
+      pop_member = evolving_triple_pop.members.first
+      genotype_values_equal = pop_member.genotypes.map { |k, v| v != nil }.uniq.compact
+      expect(genotype_values_equal).to eq [true]
+    end
+  end
 end
