@@ -19,23 +19,13 @@ class Triple
 end
 
 if Triple.is_evolveable?
-
   triple_pop = Triple.build_population(0, 10, 100)
-
-  pp "g 0"
-  pp triple_pop.members
-
-  triple_pop.make_next_generation!
-
-  pp "g 1"
-  pp triple_pop.members
-  #triple_pop.evolve! # create new generations until fitness goal is met or generation limit is met
-
+  triple_pop.evolve! # create new generations until fitness goal is met or generation limit is met
 
   puts "Solution"
   puts "========"
-  puts "number of generations: #{triple_pop.history.size}"
-  puts triple_pop.best_member # print the member representing the solution
-  puts triple_pop.best_member.fitness
-
+  puts "generation number: #{triple_pop.generation}"
+  puts "best member fitness: #{triple_pop.best_member.fitness}"
+  puts "best member:"
+  pp triple_pop.best_member
 end

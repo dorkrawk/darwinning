@@ -4,11 +4,9 @@ require_relative 'darwinning/evolution_types/mutation'
 require_relative 'darwinning/evolution_types/reproduction'
 require_relative 'darwinning/population'
 require_relative 'darwinning/config'
-require 'pp'
 
 module Darwinning
   extend Config
-  #include Implementation
 
   def self.included(base)
     def base.genes

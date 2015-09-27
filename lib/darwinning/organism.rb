@@ -42,20 +42,13 @@ module Darwinning
           # make genotypes a hash with gene objects as keys
           @genotypes[g] = g.express
         end
-        #@genotypes = self.class.genes.map { |g| g.express } # Gene expressions
       else
         @genotypes = genotypes
       end
 
       @fitness = -1
     end
-
-    def nice_print
-      puts self.class.name == "" ? "[no name]" : self.class.name
-      self.class.genes.to_enum.each_with_index { |g, i| puts "  #{g.name}: #{@genotypes[i]} #{g.units}" }
-      puts "    fitness: #{fitness}"
-    end
-
+    
     def name
       self.class.name
     end

@@ -13,97 +13,96 @@ Installation
 gem install darwinning
 ```
 
-Examples
+Usage
 --------
 
-*(to run the included examples, make sure you've installed the gem first)*
+There are two ways of using **Darwinning**. You can either start with a class that is a subclass of `Darwinning::Organism` or you can include `Darwinning` in an existing class that you would like to make evolveable.
 
-### Fifteen
+### Include Style:
+
+*This style is useful if you want to take existing objects and use Darwinning on them when needed.*
 
 Here's an dumb example of how you might use Darwinning to solve a pointless problem:
 
-Let's say for some reason you need a set of 3 numbers that add up to 15.  This is a strange problem to have, but let's solve it anyway.
+Let's say for some reason you need a set of 3 numbers (within a range of 0-100) that add up to 100.  This is a strange problem to have, but let's solve it anyway.
 
 ```ruby
-class Triple < Darwinning::Organism
+require 'darwinning'
 
+class Triple
+  include Darwinning
+
+  GENE_RANGES = {
+    first_number: (0..100),
+    second_number: (0..100),
+    third_number: (0..100)
+  }
+
+  attr_accessor :first_number, :second_number, :third_number
+
+  def fitness
+    # Try to get the sum of the 3 digits to add up to 100
+    (first_number + second_number + third_number - 100).abs
+  end
+end
+```
+
+In order to use Darwinning this way you must:
+- `include Darwinning` in your class
+- define a `GENE_RANGES` constant with your relivant value names as keys
+- define `attr_accessor`s for all your values
+- define a `fitness` method
+
+Once you have your organism class that includes Darwinning, you can create a population and evolve it:
+
+```ruby
+if Triple.is_evolveable?
+	triple_pop = Triple.build_population(0, 10, 100)
+	triple_pop.evolve!
+
+	pp "Best member: #{triple_pop.best_member"
+end
+```
+
+### Inheritance Style:
+
+*This style is good when you just want to set up some quick objects to only use in Darwinning tasks.*
+
+Let's solve the same dumb problem we looked at before...
+
+```ruby
+require 'darwinning'
+
+class Triple < Darwinning::Organism
 	@name = "Triple"
 	@genes = [
-			Darwinning::Gene.new(name: "first digit", value_range: (0..9)),
-			Darwinning::Gene.new(name: "second digit", value_range: (0..9)),
-			Darwinning::Gene.new(name: "third digit", value_range: (0..9))
-		]
+		Darwinning::Gene.new(name: "first digit", value_range: (0..100)),
+		Darwinning::Gene.new(name: "second digit", value_range: (0..100)),
+		Darwinning::Gene.new(name: "third digit", value_range: (0..100))
+	]
 
 	def fitness
-		# Try to get the sum of the 3 digits to add up to 15
-		(genotypes.values.inject{ |sum, x| sum + x } - 15).abs
+	# Try to get the sum of the 3 digits to add up to 100
+		(genotypes.values.inject { |sum, x| sum + x } - 100).abs
 	end
-end 
+end
+```
 
-p = Darwinning::Population.new(
+With this `Darwinning::Organism` class, you can now build a population and evolve it:
+
+```ruby
+triple_pop = Darwinning::Population.new(
 	organism: Triple, population_size: 10,
 	fitness_goal: 0, generations_limit: 100
 )
-p.evolve!
+triple_pop.evolve!
 
-p.best_member.nice_print # prints the member representing the solution
+pp "Best member: #{triple_pop.best_member"
 ```
 
-This code declares an organism class that inherits from Darwinning's Organism parent class to represent solutions.  Then we create a population of these solution organisms and evolve the population until a solution meets the fitness threshold or the generation limit is met.
+### More Examples
 
-### Cookies
-
-Or let's say you want to find the perfect chocolate chip cookie recipie.  Sure you could ask your grandmother, but why not let a genetic algorithm do all the work for you?  Some baking may be required for this one.
-
-Define a cookie Organism class, generate an initial population, bake a batch of each and have your friends rate each batch.  Use that rating as the fitness value for each recipie and then generate the next generation of cookie recipies.  Repeat until you have optimized the recipie or you are sick from eating too many cookies.
-
-```ruby
-class Cookie < Darwinning::Organism
-
-	@name = "Chocolate Chip Cookie"
-	@genes = [
-			Darwinning::Gene.new(name: "white sugar", value_range: (0..1), units: "cup"),
-			Darwinning::Gene.new(name: "brown sugar", value_range: (0..1), units: "cup"),
-			Darwinning::Gene.new(name: "flour", value_range: (0..3), units: "cup"),
-			Darwinning::Gene.new(name: "eggs", value_range: (0..3)),
-			Darwinning::Gene.new(name: "baking powder", value_range: (0..2), units: "teaspoon"),
-			Darwinning::Gene.new(name: "salt", value_range: (0..2), units: "teaspoon"),
-			Darwinning::Gene.new(name: "butter", value_range: (0..2), units: "cup"),
-			Darwinning::Gene.new(name: "vanilla extract", value_range: (0..2), units: "teaspoon"),
-			Darwinning::Gene.new(name: "chocolate chips", value_range: (0..20), units: "ounce"),
-			Darwinning::Gene.new(name: "oven temp", value_range: (300..400), units: "degrees F"),
-			Darwinning::Gene.new(name: "cook time", value_range: (5..20), units: "minute")
-		]
-
-end
-
-p = Darwinning::Population.new(
-	organism: Cookie, population_size: 10,
-	fitness_goal: 5, generations_limit: 100
-)
-
-first_gen_ratings = [1.5, 4, 3, 3.5, 2, 1, 1.5, 3, 2.5, 0.5]
-p.set_members_fitness!(first_gen_ratings)
-
-p.make_next_generation!
-
-p.members.each { |m| m.nice_print } # print second generation of cookie recipies
-```
-
-### Binary String Organism
-
-A simple binary string representation of an organism can be easily created thusly:
-
-```ruby
-class BinaryOrganism < Darwinning::Organism
-
-	10.times { |s| @genes << Darwinning::Gene.new("", [0,1]) }
-
-	def fitness
-		# whatever makes sense here
-	end  
-end
-```
+Check out the `/examples` folder for more examples. That seems like a good place to put examples, right?
 
 ## Built by:
 * [Dave Schwantes](https://github.com/dorkrawk "dorkrawk")
