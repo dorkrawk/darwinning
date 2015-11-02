@@ -19,11 +19,11 @@ p = Darwinning::Population.new(
 )
 
 puts "First Generation of Population!"
-p.members.each { |m| m.nice_print }
+p.members.each { |m| pp m }
 
 p.evolve!
 
 puts "Solution:"
-p.best_member.nice_print # print the member representing the solution
+pp p.best_member # print the member representing the solution
 
 puts "Solution met after #{p.generation} generations."

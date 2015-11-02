@@ -1,4 +1,5 @@
 require 'darwinning'
+require 'pp'
 
 class Triple < Darwinning::Organism
 	@name = "Triple"
@@ -24,12 +25,12 @@ p1 = Darwinning::Population.new(
 )
 
 # puts "First Generation of Population"
-# p1.members.each { |m| m.nice_print }  # print the initial population members
+# p1.members.each { |m| pp m }  # print the initial population members
 
 p1.evolve! # create new generations until fitness goal is met or generation limit is met
 
 puts "Solution:"
-p1.best_member.nice_print # print the member representing the solution
+pp p1.best_member
 
 puts "Solution met after #{p1.generation} generations."
 
@@ -38,13 +39,13 @@ puts "Solution met after #{p1.generation} generations."
 
 # puts "Second Generation of p2:"
 # p2.make_next_generation! # manually create 2nd generation of popuation
-# p2.members.each { |m| m.nice_print }
+# p2.members.each { |m| pp m }
 
 # puts "Newly Created Members from p2:"
 # # mannually "breed" 2 population members
 # new_members = p2.sexytimes(p2.members[0], p2.members[1]) # sexytimes is an alias for crossover, because it's funny
-# new_members.each { |m| m.nice_print }
+# new_members.each { |m| pp m }
 
 # puts "Mutated Member from p2"
 # # mannually mutate one of the newly created organisms
-# new_members[0].mutate!.nice_print
+# pp new_members[0].mutate!

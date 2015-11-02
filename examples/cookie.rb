@@ -27,7 +27,7 @@ p = Darwinning::Population.new(
 )
 
 puts "First Generation of Cookie Population"
-p.members.each { |m| m.nice_print }  # print the initial population members
+p.members.each { |m| pp m }  # print the initial population members
 
 # We manually gather 5 star ratings for all 10 cookie recipes and store them in an array
 first_gen_ratings = [1.5, 4, 3, 3.5, 2, 1, 1.5, 3, 2.5, 0.5]
@@ -38,4 +38,4 @@ p.set_members_fitness!(first_gen_ratings)
 p.make_next_generation!
 
 puts "Second Generation of Cookie Population"
-p.members.each { |m| m.nice_print } # note, all new members will again have a fitness of -1 until manually set
+p.members.each { |m| pp m } # note, all new members will again have a fitness of -1 until manually set
