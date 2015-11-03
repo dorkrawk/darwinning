@@ -1,4 +1,5 @@
 require 'darwinning'
+require 'pp'
 
 class Cookie < Darwinning::Organism
 	@name = "Chocolate Chip Cookie"
