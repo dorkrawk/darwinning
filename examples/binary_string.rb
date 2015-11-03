@@ -1,4 +1,5 @@
 require 'darwinning'
+require 'pp'
 
 class BinaryOrganism < Darwinning::Organism
 	10.times do |s|
