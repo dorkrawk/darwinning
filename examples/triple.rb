@@ -1,4 +1,4 @@
-require '../lib/darwinning'
+require 'darwinning'
 require 'pp'
 
 class Triple
@@ -14,7 +14,8 @@ class Triple
 
   def fitness
     # Try to get the sum of the 3 digits to add up to 100
-    (first_number + second_number + third_number - 100).abs
+    return @fitness if defined?(@fitness)
+    @fitness = (first_number + second_number + third_number - 100).abs
   end
 end
 
