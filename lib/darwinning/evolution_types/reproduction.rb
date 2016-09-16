@@ -33,7 +33,7 @@ module Darwinning
 
       def new_member_from_genotypes(organism_klass, genotypes)
         new_member = organism_klass.new
-        if organism_klass.superclass.to_s == "Darwinning::Organism"
+        if organism_klass.superclass == Darwinning::Organism
           new_member.genotypes = genotypes
         else
           new_member.genes.each do |gene|
@@ -60,7 +60,7 @@ module Darwinning
         [genotypes1, genotypes2]
       end
 
-      def random_swap(m1, m2)        
+      def random_swap(m1, m2)
         genotypes1 = {}
         genotypes2 = {}
 
@@ -69,7 +69,7 @@ module Darwinning
           g2_parent = [m1,m2].sample
 
           genotypes1[gene] = g1_parent.genotypes[gene]
-          genotypes2[gene] = g2_parent.genotypes[gene]          
+          genotypes2[gene] = g2_parent.genotypes[gene]
         end
 
         [genotypes1, genotypes2]
