@@ -44,7 +44,8 @@ module Darwinning
     end
 
     def make_next_generation!
-      temp_members = members
+      verify_population_size_is_even_and_positive!
+
       new_members = []
 
       until new_members.length == members.length
@@ -86,6 +87,12 @@ module Darwinning
     end
 
     private
+
+    def verify_population_size_is_even_and_positive!
+      unless @population_size.even? && @population_size.positive?
+        raise "Population size must be an even and positive number!"
+      end
+    end
 
     def build_member
       member = organism.new

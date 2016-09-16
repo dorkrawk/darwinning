@@ -6,7 +6,7 @@ describe Darwinning::Population do
       organism: Triple, population_size: 10, fitness_goal: 0
     )
   }
-  
+
   it "fitness goal should be set to 0" do
     expect(pop_triple.fitness_goal).to eq 0
   end
@@ -25,6 +25,28 @@ describe Darwinning::Population do
 
     expect(pop_triple.generation).to eq 1
     expect(pop_triple.members).not_to eq old_members
+  end
+
+  describe "#make_next_generation!" do
+    context "with a specified odd-number for population size" do
+      it "raises an exception" do
+        population = Darwinning::Population.new(
+          organism: Triple, fitness_goal: 0, population_size: 3
+        )
+
+        expect { population.make_next_generation! }.to raise_error(RuntimeError)
+      end
+    end
+
+    context "with a specified not-positive number for population size" do
+      it "raises an exception" do
+        population = Darwinning::Population.new(
+          organism: Triple, fitness_goal: 0, population_size: 0
+        )
+
+        expect { population.make_next_generation! }.to raise_error(RuntimeError)
+      end
+    end
   end
 
   describe "#history" do
