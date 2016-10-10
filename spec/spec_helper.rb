@@ -1,4 +1,5 @@
 require 'darwinning'
-require './spec/classes/triple'
-require './spec/classes/new_triple'
-require './spec/classes/chimps'
+
+Dir[
+  File.join(File.dirname(__FILE__), './classes/*.rb'),
+].each { |file| require file }
