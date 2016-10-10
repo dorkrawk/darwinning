@@ -29,12 +29,12 @@ describe Darwinning::Population do
 
   describe "#make_next_generation!" do
     context "with a specified odd-number for population size" do
-      it "raises an exception" do
+      it "does not change the member count" do
         population = Darwinning::Population.new(
           organism: Triple, fitness_goal: 0, population_size: 3
         )
 
-        expect { population.make_next_generation! }.to raise_error(RuntimeError)
+        expect { population.make_next_generation! }.not_to change{ population.members.length }
       end
     end
 
