@@ -31,7 +31,14 @@ module Darwinning
       # Selects a random genotype from the organism and re-expresses its gene
       def re_express_random_genotype(member)
         random_index = (0..member.genotypes.length - 1).to_a.sample
-        member.genotypes[random_index] = member.genes[random_index].express
+        gene = member.genes[random_index]
+
+        if member.class.superclass == Darwinning::Organism
+          member.genotypes[gene] = gene.express
+        else
+          member.send("#{gene.name}=", gene.express)
+        end
+
         member
       end
     end
