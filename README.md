@@ -123,6 +123,4 @@ Check out the `/examples` folder for more examples. That seems like a good place
 * [Dave Schwantes](https://github.com/dorkrawk "dorkrawk")
 
 ### With help from:
-* [Cameron Dutro](https://github.com/camertron "camertron")
-* [Maurizio Del Corno](https://github.com/druzn3k "druzn3k")
-* [Evan Brynne](https://github.com/ebrynne "ebrynne")
+[lots of great contributers](https://github.com/dorkrawk/darwinning/graphs/contributors)
