@@ -44,16 +44,19 @@ module Darwinning
     end
 
     def make_next_generation!
-      verify_population_size_is_even_and_positive!
+      verify_population_size_is_positive!
 
       new_members = []
 
-      until new_members.length == members.length
+      until new_members.length >= members.length
         m1 = weighted_select(members)
         m2 = weighted_select(members)
 
         new_members += apply_pairwise_evolutions(m1, m2)
       end
+
+      # In the case of an odd population size, we likely added one too many members.
+      new_members.pop if new_members.length > members.length
 
       @members = apply_non_pairwise_evolutions(new_members)
       @history << @members
@@ -88,9 +91,9 @@ module Darwinning
 
     private
 
-    def verify_population_size_is_even_and_positive!
-      unless @population_size.even? && @population_size.positive?
-        raise "Population size must be an even and positive number!"
+    def verify_population_size_is_positive!
+      unless @population_size.positive?
+        raise "Population size must be a positive number!"
       end
     end
 
