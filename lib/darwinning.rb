@@ -4,6 +4,8 @@ require_relative 'darwinning/evolution_types/mutation'
 require_relative 'darwinning/evolution_types/reproduction'
 require_relative 'darwinning/population'
 require_relative 'darwinning/config'
+require_relative 'darwinning/monkey_patch'
+
 
 module Darwinning
   extend Config
@@ -13,7 +15,7 @@ module Darwinning
       gene_ranges.map { |k,v| Gene.new(name: k, value_range: v) }
     end
 
-    def base.build_population(fitness_goal, population_size = 10, generations_limit = 100, 
+    def base.build_population(fitness_goal, population_size = 10, generations_limit = 100,
                          evolution_types = Population::DEFAULT_EVOLUTION_TYPES)
       Population.new(organism: self, population_size: population_size,
                      generations_limit: generations_limit, fitness_goal: fitness_goal,
