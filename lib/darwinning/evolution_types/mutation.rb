@@ -20,7 +20,7 @@ module Darwinning
 
       def mutate(members)
         members.map do |member|
-          if (0..100).to_a.sample < mutation_rate * 100
+          if rand < mutation_rate
             re_express_random_genotype(member)
           else
             member
@@ -30,7 +30,7 @@ module Darwinning
 
       # Selects a random genotype from the organism and re-expresses its gene
       def re_express_random_genotype(member)
-        random_index = (0..member.genotypes.length - 1).to_a.sample
+        random_index = rand(member.genotypes.length - 1)
         gene = member.genes[random_index]
 
         if member.class.superclass == Darwinning::Organism
