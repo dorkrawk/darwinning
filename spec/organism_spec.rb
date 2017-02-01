@@ -16,8 +16,8 @@ describe Darwinning::Organism do
     expect(org.genotypes).to be {}
   end
 
-  it "fitness should default to -1" do
-    expect(org.fitness).to eq -1
+  it "fitness should default to nil" do
+    expect(org.fitness).to eq nil
   end
 
   it "child class should set name" do

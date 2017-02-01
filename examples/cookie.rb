@@ -39,4 +39,4 @@ p.set_members_fitness!(first_gen_ratings)
 p.make_next_generation!
 
 puts "Second Generation of Cookie Population"
-p.members.each { |m| pp m } # note, all new members will again have a fitness of -1 until manually set
+p.members.each { |m| pp m } # note, all new members will again have a fitness of nil until manually set

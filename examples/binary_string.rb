@@ -4,7 +4,7 @@ require 'pp'
 class BinaryOrganism < Darwinning::Organism
 	10.times do |s|
     @genes << Darwinning::Gene.new(
-      name: '', value_range: [0, 1]
+      name: "g#{s}", value_range: [0, 1]
     )
   end
 
