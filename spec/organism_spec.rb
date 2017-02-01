@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe Darwinning::Organism do
   let(:org) { Darwinning::Organism.new }

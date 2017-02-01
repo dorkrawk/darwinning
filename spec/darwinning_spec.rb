@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe Darwinning do
   let(:triple_pop) { NewTriple.build_population(0, 20, 1000) }
@@ -18,7 +18,7 @@ describe Darwinning do
       manual_fitness = (a_triple.first_digit + a_triple.second_digit + a_triple.third_digit - 15).abs
 
       expect(a_triple.fitness).to eq manual_fitness
-    end 
+    end
   end
 
   describe '#genes' do
@@ -53,7 +53,7 @@ describe Darwinning do
     end
   end
 
-  describe 'population member' do 
+  describe 'population member' do
     it 'is of the parent class' do
       expect(triple_pop_member.class.name).to eq "NewTriple"
     end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe Darwinning::Gene do
   let(:digit) { Darwinning::Gene.new(name: "digit", value_range: (0..9)) }
@@ -10,7 +10,7 @@ describe Darwinning::Gene do
       units: "o'clock"
     )
   }
-  
+
   it "name should be set" do
     expect(digit.name).to eq "digit"
   end
