@@ -14,7 +14,7 @@ module Darwinning
       @organism = options.fetch(:organism)
       @population_size = options.fetch(:population_size)
       @fitness_goal = options.fetch(:fitness_goal)
-      @fitness_objective = options.fetch(:fitness_objective, :maximize) # :nullify, :maximize, :minimize
+      @fitness_objective = options.fetch(:fitness_objective, :nullify) # :nullify, :maximize, :minimize
       @generations_limit = options.fetch(:generations_limit, 0)
       @evolution_types = options.fetch(:evolution_types, DEFAULT_EVOLUTION_TYPES)
       @members = []
@@ -75,7 +75,11 @@ module Darwinning
     end
 
     def best_member
-      @members.sort_by { |m| m.fitness }.first
+      @members.first
+    end
+
+    def best_each_generation
+      @history.map(&:first)
     end
 
     def size

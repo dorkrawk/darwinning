@@ -123,4 +123,4 @@ Check out the `/examples` folder for more examples. That seems like a good place
 * [Dave Schwantes](https://github.com/dorkrawk "dorkrawk")
 
 ### With help from:
-[lots of great contributers](https://github.com/dorkrawk/darwinning/graphs/contributors)
+[lots of great contributers](https://github.com/dorkrawk/darwinning/graphs/contributors) and work based on forks from: [Nanosim-LIG](https://github.com/Nanosim-LIG)
