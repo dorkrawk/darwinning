@@ -1,9 +1,7 @@
 module Darwinning
   class Population
 
-    EPSILON = 0.01
-
-    attr_reader :members, :generations_limit, :fitness_goal,
+    attr_reader :members, :generations_limit, :fitness_goal, :fitness_objective,
                 :organism, :population_size, :generation,
                 :evolution_types, :history
 
@@ -16,6 +14,7 @@ module Darwinning
       @organism = options.fetch(:organism)
       @population_size = options.fetch(:population_size)
       @fitness_goal = options.fetch(:fitness_goal)
+      @fitness_objective = options.fetch(:fitness_objective, :maximize) # :nullify, :maximize, :minimize
       @generations_limit = options.fetch(:generations_limit, 0)
       @evolution_types = options.fetch(:evolution_types, DEFAULT_EVOLUTION_TYPES)
       @members = []
@@ -23,6 +22,7 @@ module Darwinning
       @history = []
 
       build_population(@population_size)
+      sort_members
       @history << @members
     end
 
@@ -41,6 +41,7 @@ module Darwinning
     def set_members_fitness!(fitness_values)
       throw "Invaid number of fitness values for population size" if fitness_values.size != members.size
       members.to_enum.each_with_index { |m, i| m.fitness = fitness_values[i] }
+      sort_members
     end
 
     def make_next_generation!
@@ -49,8 +50,8 @@ module Darwinning
       new_members = []
 
       until new_members.length >= members.length
-        m1 = weighted_select(members)
-        m2 = weighted_select(members)
+        m1 = weighted_select
+        m2 = weighted_select
 
         new_members += apply_pairwise_evolutions(m1, m2)
       end
@@ -59,6 +60,7 @@ module Darwinning
       new_members.pop if new_members.length > members.length
 
       @members = apply_non_pairwise_evolutions(new_members)
+      sort_members
       @history << @members
       @generation += 1
     end
@@ -66,9 +68,9 @@ module Darwinning
     def evolution_over?
       # check if the fitness goal or generation limit has been met
       if generations_limit > 0
-        generation == generations_limit || best_member.fitness == fitness_goal
+        generation == generations_limit || goal_attained?
       else
-        best_member.fitness == fitness_goal
+        goal_attained?
       end
     end
 
@@ -91,6 +93,28 @@ module Darwinning
 
     private
 
+    def goal_attained?
+      case @fitness_objective
+      when :nullify
+        best_member.fitness.abs <= fitness_goal
+      when :maximize
+        best_member.fitness >= fitness_goal
+      else
+        best_member.fitness <= fitness_goal
+      end
+    end
+
+    def sort_members
+      case @fitness_objective
+      when :nullify
+        @members = @members.sort_by { |m| m.fitness ? m.fitness.abs : m.fitness }
+      when :maximize
+        @members = @members.sort_by { |m| m.fitness }.reverse
+      else
+        @members = @members.sort_by { |m| m.fitness }
+      end
+    end
+
     def verify_population_size_is_positive!
       unless @population_size.positive?
         raise "Population size must be a positive number!"
@@ -108,27 +132,49 @@ module Darwinning
       member
     end
 
-    def weighted_select(members)
-      fitness_sum = members.inject(0) { |sum, m| sum + m.fitness }
-
-      weighted_members = members.sort_by do |m|
-        (m.fitness - fitness_goal).abs
-      end.map do |m|
-        [m, fitness_sum / ((m.fitness - fitness_goal).abs + EPSILON)]
+    def compute_normalized_fitness(membs=members)
+      normalized_fitness = nil
+      return membs.collect { |m| [1.0/membs.length, m] } if membs.first.fitness == membs.last.fitness
+      if @fitness_objective == :nullify
+        normalized_fitness = membs.collect { |m| [ m.fitness.abs <= fitness_goal ? Float::INFINITY : 1.0/(m.fitness.abs - fitness_goal), m] }
+      else
+        if @fitness_objective == :maximize
+          if fitness_goal == Float::INFINITY then
+            #assume goal to be at twice the maximum distance between fitness
+            goal = membs.first.fitness + ( membs.first.fitness - membs.last.fitness )
+          else
+            goal = fitness_goal
+          end
+          normalized_fitness  = membs.collect { |m| [ m.fitness >= goal ? Float::INFINITY : 1.0/(goal - m.fitness), m] }
+        else
+          if fitness_goal == -Float::INFINITY then
+            goal = membs.first.fitness - ( membs.last.fitness - membs.first.fitness )
+          else
+            goal = fitness_goal
+          end
+          normalized_fitness  = membs.collect { |m| [ m.fitness <= goal ? Float::INFINITY : 1.0/(m.fitness - goal), m] }
+        end
       end
-
-      weight_sum = weighted_members.inject(0) { |sum, m| sum + m[1] }
-      pick = (0..weight_sum).to_a.sample
-
-      weighted_members.reverse! # In order to pop from the end we need the lowest ranked first
-      pick_sum = 0
-
-      until pick_sum > pick do
-        selected_member = weighted_members.pop
-        pick_sum += selected_member[1]
+      if normalized_fitness.first[0] == Float::INFINITY then
+        normalized_fitness.collect! { |m|
+          m[0] == Float::INFINITY ? [1.0, m[1]] : [0.0, m[1]]
+        }
       end
+      sum = normalized_fitness.collect(&:first).inject(0.0, :+)
+      normalized_fitness.collect { |m| [m[0]/sum, m[1]] }
+    end
 
-      selected_member.first
+    def weighted_select(membs=members)
+      normalized_fitness = compute_normalized_fitness
+      normalized_cumulative_sums = []
+      normalized_cumulative_sums[0] = normalized_fitness[0]
+      (1...normalized_fitness.length).each { |i|
+        normalized_cumulative_sums[i] = [ normalized_cumulative_sums[i-1][0] + normalized_fitness[i][0], normalized_fitness[i][1] ]
+      }
+
+      normalized_cumulative_sums.last[0] = 1.0
+      cut = rand
+      return normalized_cumulative_sums.find { |e| cut < e[0] }[1]
     end
 
     def apply_pairwise_evolutions(m1, m2)
