@@ -58,4 +58,12 @@ describe Darwinning::Population do
 
   end
 
+  describe "#best_each_generation" do
+
+    it "should show the best member from each generations members" do
+      pop_triple.evolve!
+      expect(pop_triple.best_each_generation.last).to eq pop_triple.best_member
+    end
+  end
+
 end

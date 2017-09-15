@@ -22,8 +22,6 @@ module Darwinning
       @history = []
 
       build_population(@population_size)
-      sort_members
-      @history << @members
     end
 
     def build_population(population_size)
@@ -46,6 +44,8 @@ module Darwinning
 
     def make_next_generation!
       verify_population_size_is_positive!
+      sort_members
+      @history << @members
 
       new_members = []
 
